@@ -1,0 +1,56 @@
+DOCKER compose
+NOW
+ - add volume for db data
+- try locally
+
+- ADD FORMBRICKS!
+
+LATER
+ - add ngnix to 
+    - listen 443
+    - distribute to microservices
+
+
+BACKEND
+NOW
+-
+
+LATER
+- add cors
+- add route to track route kartierung
+- add route to flag kartierung as invalid
+- get route to get kartier status
+ 
+ DATAbase
+ NOW
+ - add radrouten segmented to database
+ 
+ LATER
+ - add table to track kartierungen with timestamps and answer ids if possible
+
+
+
+FRONTEND
+NOW
+- load data from backend
+    DONE- put real directions! 
+- serve with frontend with pyserver
+- check wkb submission
+- add our formbricks url
+
+LATER
+- add option to show route kartierung status
+- add option to flag kartierung as invalid
+
+
+FORMBRICKS
+- create new survey from json export
+
+
+DATA
+NOW
+- check difference between our data and newest data
+
+- TESTS
+- unit tests backend
+- e2e tests survey
