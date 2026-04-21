@@ -451,7 +451,11 @@
   </div>
 
   <script>
-    const backendUrl = 'localhost:5000';  // >TODO use domain name 
+    // Read backendUrl from URL parameter, fallback to localhost
+    const urlParams = new URLSearchParams(window.location.search);
+    const backendUrl = urlParams.get('backendUrl') || 'localhost:5000'; // TOOD change to domain name
+    console.log('Using backend URL:', backendUrl);
+    
     const users = [
       "Andre",
       "Lukas",
