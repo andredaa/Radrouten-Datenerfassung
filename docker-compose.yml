@@ -1,7 +1,8 @@
 services:
+# TODO add ngnix service. no longer use "ports" on the other services then!
   db:
     image: postgis/postgis
-    container_name: imeq-db
+    container_name: bac-karierung-db
     environment:
       POSTGRES_USER: ${POSTGIS_USER}
       POSTGRES_PASSWORD: ${POSTGIS_PASSWORD}
@@ -17,13 +18,13 @@ services:
       start_period: 40s
     restart: always
     networks:
-      - imeq_net
+      - bac_kartierung_net
 
   backend:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    container_name: imeq-backend
+    container_name: bac-kartierung-backend
     depends_on:
       db:
         condition: service_healthy
@@ -39,23 +40,23 @@ services:
 
     restart: always
     networks:
-      - imeq_net
+      - bac_kartierung_net
 
   frontend:
     build:
       context: .
       dockerfile: frontend/Dockerfile
-    container_name: imeq-frontend
+    container_name: kartierung-frontend
     depends_on:
       - backend
     ports:
-      - "${FRONTEND_PORT}:80" # Map host port to container port
+      - "${FRONTEND_PORT}:80"  # Map host port to container port
     restart: always
     networks:
-      - imeq_net
+      - bac_kartierung_net
 
 volumes:
   imeq_db_data:
 
 networks:
-  imeq_net:
+  bac_kartierung_net:
