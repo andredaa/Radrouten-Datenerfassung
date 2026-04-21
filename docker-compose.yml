@@ -10,7 +10,7 @@ services:
     ports:
       - "${DB_PORT}:5432" # Map host port to container port
     volumes:
-      - imeq_db_data:/var/lib/postgresql/data
+      - ./db_data:/var/lib/postgresql/data  # Bind mount to local folder
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGIS_USER} -d ${POSTGIS_DB}"]
       interval: 10s
@@ -23,7 +23,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: backend/Dockerfile
+      dockerfile: python-backend/Dockerfile
     container_name: bac-kartierung-backend
     depends_on:
       db:
@@ -31,7 +31,6 @@ services:
     ports:
       - "${BACKEND_PORT}:5000" # Map host port to container port
     environment:
-      OPEN_ROUTE_SERVICE_KEY: ${OPEN_ROUTE_SERVICE_KEY}
       POSTGIS_USER: ${POSTGIS_USER}
       POSTGIS_PASSWORD: ${POSTGIS_PASSWORD}
       POSTGIS_DB: ${POSTGIS_DB}
@@ -54,9 +53,6 @@ services:
     restart: always
     networks:
       - bac_kartierung_net
-
-volumes:
-  imeq_db_data:
 
 networks:
   bac_kartierung_net:
