@@ -19,4 +19,5 @@ RUN uv pip install --no-cache -r pyproject.toml
 
 COPY backend/ .
 
+# TODO add some more workers
 CMD ["uv", "run", "uvicorn", "server:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "5000"]
