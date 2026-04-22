@@ -590,11 +590,6 @@
               "id": "019daf7e-3ac5-733d-9dd6-67fd1eff831f",
               "type": "maxSelections",
               "params": { "max": 2 }
-            },
-            {
-              "id": "019daf7f-2010-75fe-9681-7f51602067ff",
-              "type": "minSelections",
-              "params": { "min": 1 }
             }
           ]
         },

@@ -1,0 +1,106 @@
+{
+  "autoClose": null,
+  "autoComplete": null,
+  "createdBy": null,
+  "delay": 0,
+  "displayLimit": null,
+  "displayOption": "displayOnce",
+  "displayPercentage": null,
+  "endings": [
+    {
+      "buttonLabel": {
+        "default": "Create your own Survey"
+      },
+      "buttonLink": "https://formbricks.com/signup",
+      "headline": {
+        "default": "Thank you!"
+      },
+      "id": "p73t62dgwq0cvmtt6ug0hmfc",
+      "subheader": {
+        "default": "We appreciate your feedback."
+      },
+      "type": "endScreen"
+    }
+  ],
+  "environmentId": "cmo9ztnuz000cmw011wcvwk94",
+  "hiddenFields": {
+    "enabled": false,
+    "fieldIds": []
+  },
+  "isVerifyEmailEnabled": false,
+  "languages": [],
+  "name": "Example Survey",
+  "pin": null,
+  "productOverwrites": null,
+  "questions": [
+    {
+      "headline": {
+        "default": "What would you like to know?"
+      },
+      "id": "ovpy6va1hab7fl12n913zua0",
+      "inputType": "text",
+      "placeholder": {
+        "default": "Type your answer here..."
+      },
+      "required": true,
+      "subheader": {
+        "default": "This is an example survey."
+      },
+      "type": "openText"
+    },
+    {
+      "choices": [
+        {
+          "id": "xpoxuu3sifk1ee8he67ctf5i",
+          "label": {
+            "default": "Sun ☀️"
+          }
+        },
+        {
+          "id": "hnsovcdmxtcbly6tig1az3qc",
+          "label": {
+            "default": "Ocean 🌊"
+          }
+        },
+        {
+          "id": "kcnelzdxknvwo8fq20d3nrr5",
+          "label": {
+            "default": "Palms 🌴"
+          }
+        }
+      ],
+      "headline": {
+        "default": "What's important on vacay?"
+      },
+      "id": "awkn2llljy7a4oulp5t15yec",
+      "required": true,
+      "shuffleOption": "none",
+      "type": "multipleChoiceMulti"
+    }
+  ],
+  "recontactDays": null,
+  "redirectUrl": null,
+  "segmentId": null,
+  "showLanguageSwitch": null,
+  "singleUse": {
+    "enabled": false,
+    "isEncrypted": true
+  },
+  "status": "inProgress",
+  "styling": null,
+  "surveyClosedMessage": null,
+  "triggers": [],
+  "type": "link",
+  "welcomeCard": {
+    "enabled": false,
+    "fileUrl": "http://localhost:3000",
+    "headline": {
+      "default": "Welcome!"
+    },
+    "html": {
+      "default": "<p class=\"fb-editor-paragraph\" dir=\"ltr\"><span style=\"white-space: pre-wrap;\">Thanks for providing your feedback - let's go!</span></p>"
+    },
+    "showResponseCount": false,
+    "timeToFinish": false
+  }
+}

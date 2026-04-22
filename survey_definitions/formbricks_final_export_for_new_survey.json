@@ -1,0 +1,1622 @@
+{
+  "name": "BAC_Radrouten_Survey_final",
+  "type": "link",
+  "environmentId": "cmo9ztnuz000cmw011wcvwk94",
+  "createdBy": null,
+  "status": "inProgress",
+  "welcomeCard": {
+    "enabled": false,
+    "headline": { "default": "BAC Radrouten Kartierung" },
+    "buttonLabel": { "default": "Starten" },
+    "timeToFinish": false,
+    "showResponseCount": false
+  },
+  "questions": [
+    {
+      "id": "8600cace891146338ca28228",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "dc34a495c5264b31b1d9ed07",
+          "label": { "default": "Asphalt" }
+        },
+        {
+          "id": "857b568b17d94f03b7d9ad89",
+          "label": { "default": "Große Pflastersteine" }
+        },
+        {
+          "id": "a5a450cdeddd447a91cc2873",
+          "label": {
+            "default": "Kleine Pflastersteine, Wassergebundene Decke"
+          }
+        },
+        {
+          "id": "7aa8a8e819114b4da35a1cce",
+          "label": {
+            "default": "Abgeschl. Kopfsteinpflaster, Schotter, Sand"
+          }
+        },
+        {
+          "id": "7eb951f20d7c4e458d40f2ab",
+          "label": { "default": "Kopfsteinpflaster" }
+        },
+        {
+          "id": "0e27a0bb9490415d911aca76",
+          "label": { "default": "Keine Kartierung möglich" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Unebenheiten (Art des Belags)</strong></b></p>"
+      },
+      "required": true,
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "2ff1f2d357f640f29f284f0f",
+          "actions": [
+            {
+              "id": "98043d3c65734ce2885067d8",
+              "target": "1120ba29a30c4c069ba0c84d",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "51ca7b60aa2243fabe012f60",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "2ba9e1000b114e58834a7f99",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "8600cace891146338ca28228"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "dc34a495c5264b31b1d9ed07"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "9c5df68f3b494ca988d7752b",
+          "actions": [
+            {
+              "id": "c93eb7a24ce04deeae278da2",
+              "target": "59207b6c51054dfba254eb8f",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "596ab46c58ec43759b83bf8e",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "26a622010bdf416fad81f73a",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "8600cace891146338ca28228"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "857b568b17d94f03b7d9ad89"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "a3daccb4dedc4619b6270be5",
+          "actions": [
+            {
+              "id": "5c8adb7b776d43689ba7d734",
+              "target": "9b7708badd834be5a63808ee",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "ff68592fce8549668690da8e",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "f899bc2b920e43e5aeb95895",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "8600cace891146338ca28228"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "a5a450cdeddd447a91cc2873"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "584894396bb84cbf97767800",
+          "actions": [
+            {
+              "id": "6548f11b11484bfc9bbc49c9",
+              "target": "6b68fc20520441ebba316c01",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "257a9dae42f8480da5a415e3",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "c24f1a67703b4bacac6c3c03",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "8600cace891146338ca28228"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "7aa8a8e819114b4da35a1cce"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "377ced0f387d4545a487051c",
+          "actions": [
+            {
+              "id": "58d6287225b34df8b43c5e90",
+              "target": "8635f3e71d4e47289ca2fb3c",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "76648fc167b14647abff39f3",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "6c43e26ade97490087c118e9",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "8600cace891146338ca28228"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "7eb951f20d7c4e458d40f2ab"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "ec1cfd93d43a4bf091ff7e1c",
+          "actions": [
+            {
+              "id": "eb816365c2d646cd814cd91e",
+              "target": "8387cd6e0069425f8e4d7cc9",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "c1d4101bcb384afb91b437b4",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "07c00e962de64550b0e908e3",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "8600cace891146338ca28228"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "0e27a0bb9490415d911aca76"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "8387cd6e0069425f8e4d7cc9",
+      "type": "openText",
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Warum ist der Belag nicht kartierbar?</strong></b></p>"
+      },
+      "required": true,
+      "charLimit": { "enabled": false },
+      "inputType": "text",
+      "placeholder": { "default": "" },
+      "insightsEnabled": false,
+      "logic": [
+        {
+          "id": "6ea4d71377914bcf99421f7f",
+          "actions": [
+            {
+              "id": "a4e815cbb2d64b82bbd867d4",
+              "target": "8635f3e71d4e47289ca2fb3c",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "3a20b1f550194e539a70f487",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "14ed4688ba1e4d3e8293df97",
+                "operator": "isSubmitted",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "8387cd6e0069425f8e4d7cc9"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "8635f3e71d4e47289ca2fb3c"
+    },
+    {
+      "id": "1120ba29a30c4c069ba0c84d",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "801b83715b7140918aa15a62",
+          "label": { "default": "in gutem Zustand" }
+        },
+        {
+          "id": "c8a8ccfbaa66435abadf4e11",
+          "label": { "default": "mit vereinzelten Unebenheiten (≤1 cm)" }
+        },
+        {
+          "id": "97348cbce5fc47779c481b02",
+          "label": {
+            "default": "mit durchgehend leichten (≤1 cm) oder einzelnen starken Unebenheiten"
+          }
+        },
+        {
+          "id": "842cfafbb2714ae8bfb8e172",
+          "label": { "default": "mit mehreren starken Unebenheiten" }
+        },
+        {
+          "id": "8f5af93f791e4d0b81ed7b12",
+          "label": { "default": "mit durchgehend starken Unebenheiten" }
+        }
+      ],
+      "headline": { "default": "Zustand Asphalt" },
+      "required": true,
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "278384543f2b4928800e2db8",
+          "actions": [
+            {
+              "id": "734c95af5ce34996b1554c6c",
+              "target": "8635f3e71d4e47289ca2fb3c",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "287bd6a2e3f746ad84361c9e",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "0c2edaae7ba54ee79246d9b8",
+                "operator": "isSubmitted",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "1120ba29a30c4c069ba0c84d"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "8635f3e71d4e47289ca2fb3c"
+    },
+    {
+      "id": "59207b6c51054dfba254eb8f",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "962755c9a9c64e2ebeb71efe",
+          "label": { "default": "in gutem Zustand" }
+        },
+        {
+          "id": "0669d8f4063844bca933b0f3",
+          "label": {
+            "default": "mit durchgehend leichten (≤1 cm) oder einzelnen starken Unebenheiten"
+          }
+        },
+        {
+          "id": "e251594c5fbd42c1b97080ca",
+          "label": { "default": "mit mehreren starken Unebenheiten" }
+        },
+        {
+          "id": "170fb40326e94da9a445c000",
+          "label": { "default": "mit durchgehend starken Unebenheiten" }
+        }
+      ],
+      "headline": { "default": "Zustand große Pflastersteine" },
+      "required": true,
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "a05b3ffe7adc498da66ff899",
+          "actions": [
+            {
+              "id": "00212ab79daa4e649a27c268",
+              "target": "8635f3e71d4e47289ca2fb3c",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "c3a9d208d5bb4697ab2c7fc6",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "25c4b4a0ffbd45df9b4dfefa",
+                "operator": "isSubmitted",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "59207b6c51054dfba254eb8f"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "8635f3e71d4e47289ca2fb3c"
+    },
+    {
+      "id": "9b7708badd834be5a63808ee",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "ee870597a9e647ae9e22c0ea",
+          "label": { "default": "in gutem Zustand" }
+        },
+        {
+          "id": "280d4ad4ddec471380285e5e",
+          "label": { "default": "mit mehreren starken Unebenheiten" }
+        },
+        {
+          "id": "741e89550ebd4c0f93365464",
+          "label": { "default": "mit durchgehend starken Unebenheiten" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Zustand kleine Pflastersteine / Wassergebundene Decke</strong></b></p>"
+      },
+      "required": true,
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "57d33d9c531448f9bcbdc4ee",
+          "actions": [
+            {
+              "id": "7429c659b68945979c89710b",
+              "target": "8635f3e71d4e47289ca2fb3c",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "562cc9c287b341c7a3543da9",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "20ca442f58e94e0dbab207c2",
+                "operator": "isSubmitted",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "9b7708badd834be5a63808ee"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "8635f3e71d4e47289ca2fb3c"
+    },
+    {
+      "id": "6b68fc20520441ebba316c01",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "34e4342718e54e7387175394",
+          "label": { "default": "in gutem Zustand" }
+        },
+        {
+          "id": "5ca9eb40bc5346c9b29567ef",
+          "label": { "default": "mit durchgehend starken Unebenheiten" }
+        }
+      ],
+      "headline": {
+        "default": "Zustand abgeschl. Kopfsteinpflaster / Schotter / Sand"
+      },
+      "required": true,
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "d26746afadc8413998f2109a",
+          "actions": [
+            {
+              "id": "47f6684092ae4599973d1e68",
+              "target": "8635f3e71d4e47289ca2fb3c",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "8add5b5cb8ec416f86476555",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "3209be3591244d8cb66da49c",
+                "operator": "isSubmitted",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "6b68fc20520441ebba316c01"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "8635f3e71d4e47289ca2fb3c",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "205911f08fef4df5a47099a2",
+          "label": {
+            "default": "Farblich abgehoben, durchgehend vorhanden und sehr gut erkennbar"
+          }
+        },
+        {
+          "id": "55440cfe518e486db28ade59",
+          "label": { "default": "Durchgehend vorhanden und gut erkennbar" }
+        },
+        {
+          "id": "d9fdf78492ae4ca88bb5c233",
+          "label": {
+            "default": "Durchgehend vorhanden aber nicht gut erkennbar"
+          }
+        },
+        {
+          "id": "a9275d1ae12b469bb57b440e",
+          "label": {
+            "default": "Mit Unterbrechungen vorhanden und schlecht erkennbar"
+          }
+        },
+        {
+          "id": "4bb19bf2b8d14caabdca23ef",
+          "label": { "default": "Nicht erkennbar" }
+        },
+        {
+          "id": "2d09e3ffeaed49c8b1a34ac9",
+          "label": { "default": "Keine Kartierung möglich" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Erkennbarkeit Verkehrsführung</strong></b></p>"
+      },
+      "required": true,
+      "subheader": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">Wie gut erkennen ich und andere wo Radfahrende fahren sollen?</span></p>"
+      },
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "f785323162a5452c8d7320b8",
+          "actions": [
+            {
+              "id": "87a89743ecea4899adf0596e",
+              "target": "1e352551fbb74b2e8bea193e",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "be6394e775ef469da3cb2439",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "7dc5ac30afd149ffab0d13b7",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "8635f3e71d4e47289ca2fb3c"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "2d09e3ffeaed49c8b1a34ac9"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "x1crslc4c6ee7g4j8pawnxgh"
+    },
+    {
+      "id": "1e352551fbb74b2e8bea193e",
+      "type": "openText",
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Warum ist die </strong></b><i><b><strong class=\"fb-editor-text-bold fb-editor-text-italic\" style=\"\">Erkennbarkeit Verkehrsführung</strong></b></i><b><strong class=\"fb-editor-text-bold\" style=\"\"> nicht kartierbar?</strong></b></p>"
+      },
+      "required": true,
+      "charLimit": { "enabled": false },
+      "inputType": "text",
+      "placeholder": { "default": "" },
+      "insightsEnabled": false
+    },
+    {
+      "id": "x1crslc4c6ee7g4j8pawnxgh",
+      "type": "multipleChoiceMulti",
+      "choices": [
+        {
+          "id": "gy96lx599aqre62rzu5vm5ai",
+          "label": {
+            "default": "Kreuzung (deutlich) besser erkennbar als restlicher Abschnitt"
+          }
+        },
+        {
+          "id": "cjuw6mawobmgzmfpts6mutkv",
+          "label": {
+            "default": "Kreuzung (deutlich) schlechter erkennbar als restlicher Abschnitt​"
+          }
+        },
+        {
+          "id": "dqk8lc8hatzspwdfwuobpuny",
+          "label": { "default": "Kreuzungsfurt ist rot markiert" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">Zusatzinfo Verkehrsführung an der Kreuzung</span></p>"
+      },
+      "required": false,
+      "validation": {
+        "logic": "and",
+        "rules": [
+          {
+            "id": "019daf7e-3ac5-733d-9dd6-67fd1eff831f",
+            "type": "maxSelections",
+            "params": { "max": 2 }
+          }
+        ]
+      },
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "vi4wb0j7wz4mag2glakgtp1y",
+          "actions": [
+            {
+              "id": "hjfrn1ozszp9nvvut68vsojg",
+              "target": "83075783322f4c4381b41672",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "o0kqd1jjsvafjpztywtfqiis",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "m3a8fydrgtz7z2h617gw3wz6",
+                "operator": "isSubmitted",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "x1crslc4c6ee7g4j8pawnxgh"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "eaupcu1pzp9rag5hz2yld6ld",
+          "actions": [
+            {
+              "id": "y8715iq0dm7q9ks52phw11tp",
+              "target": "83075783322f4c4381b41672",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "aa34fudqho7zprrtls9xgdkv",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "fh5xqbjrwk0jdzauuhug02gf",
+                "operator": "isSkipped",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "x1crslc4c6ee7g4j8pawnxgh"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "buttonLabel": { "default": "" },
+      "backButtonLabel": { "default": "" }
+    },
+    {
+      "id": "83075783322f4c4381b41672",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "45e5a600ad394ff6888b6885",
+          "label": { "default": "Gar keine parkenden Autos" }
+        },
+        {
+          "id": "3df45985d4cc409d8eb8ee84",
+          "label": {
+            "default": "Vereinzelt parkende Autos (weniger als 1/3)"
+          }
+        },
+        {
+          "id": "627df2af47cf4c67aa18a064",
+          "label": {
+            "default": "Etwa die Hälfte des Abschnitts parkende Autos"
+          }
+        },
+        {
+          "id": "b77632c15ea04aeeb5ed062e",
+          "label": { "default": "Überwiegend parkende Autos (mehr als 2/3)" }
+        },
+        {
+          "id": "1ba5fe6938104f41b2b50cab",
+          "label": { "default": "Durchgehend parkende Autos" }
+        },
+        {
+          "id": "8e4f4aeeb1e74d3f9c3b43d8",
+          "label": { "default": "Keine Kartierung möglich" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Dooring (längs parkende Autos mit Abstand < 75cm)</strong></b></p>"
+      },
+      "required": true,
+      "subheader": {
+        "default": "<p class=\"fb-editor-paragraph\" style=\"text-align: left;\"><span style=\"\">Die Gefahr, auf dem Fahrrad mit einer plötzlich geöffneten (Auto-)Tür zu kollidieren​</span></p>"
+      },
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "19eed285ffe5405cb05b0a72",
+          "actions": [
+            {
+              "id": "50e541a1a51e44b4bb50b3fa",
+              "target": "9334d492d6f843609a78fd86",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "ab49a5561284461c94bac419",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "474594664b9f4c9ea1b88121",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "83075783322f4c4381b41672"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "8e4f4aeeb1e74d3f9c3b43d8"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "k6pjlstjuoentr9ep1wt7lrm"
+    },
+    {
+      "id": "9334d492d6f843609a78fd86",
+      "type": "openText",
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Warum ist Dooring nicht kartierbar?</strong></b></p>"
+      },
+      "required": true,
+      "charLimit": { "enabled": false },
+      "inputType": "text",
+      "placeholder": { "default": "" },
+      "insightsEnabled": false
+    },
+    {
+      "id": "k6pjlstjuoentr9ep1wt7lrm",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "mh0jrvpcjq8rkc6m9xf871gf",
+          "label": { "default": "Gar keine parkenden Autos​" }
+        },
+        {
+          "id": "c96zxtfnfhzo4ol2r45tir6i",
+          "label": {
+            "default": "Vereinzelt parkende Autos ​ (weniger als 1/3)​"
+          }
+        },
+        {
+          "id": "pge3xceiex3k0qbz4sxc18m6",
+          "label": {
+            "default": "Etwa die Hälfte des Abschnitts parkende Autos​"
+          }
+        },
+        {
+          "id": "slqzvh7ac2ncj57m5vz536za",
+          "label": {
+            "default": "Überwiegend parkende Autos ​ (mehr als 2/3)​"
+          }
+        },
+        {
+          "id": "eamohcrxcllcbfs2fxxpdq42",
+          "label": { "default": "Durchgehend parkende Autos​" }
+        },
+        {
+          "id": "n5kfh0qojqubt3e5kfcjfjrf",
+          "label": { "default": "Keine Kartierung möglich" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">Querparkende Autos​ (Abstand < 75cm)</span></p>"
+      },
+      "required": false,
+      "subheader": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">Bin ich als Radfahrer in diesem Abschnitt durch quer (aus-)parkende Autos gefährdet?​</span></p>"
+      },
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "y8xmj0mwbn9pjob1kj3vf2xi",
+          "actions": [
+            {
+              "id": "lbz1z353r56cehqnl1i30sjc",
+              "target": "gtsxi76o6gtdxhdycu18e18z",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "l3bzd70u6u90qodleuqkd9in",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "iiix95xagqz7tm0bi5xtibu3",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "k6pjlstjuoentr9ep1wt7lrm"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "n5kfh0qojqubt3e5kfcjfjrf"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "54b16f6d1b35465eaa70bbc4",
+      "buttonLabel": { "default": "" },
+      "backButtonLabel": { "default": "" }
+    },
+    {
+      "id": "gtsxi76o6gtdxhdycu18e18z",
+      "type": "openText",
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">Warum ist \"Querparkende Autos\" nicht kartierbar?</span></p>"
+      },
+      "required": false,
+      "charLimit": { "enabled": false },
+      "inputType": "text",
+      "longAnswer": true,
+      "placeholder": { "default": "Type your answer here…" },
+      "insightsEnabled": false,
+      "buttonLabel": { "default": "" },
+      "backButtonLabel": { "default": "" }
+    },
+    {
+      "id": "54b16f6d1b35465eaa70bbc4",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "c344741b1be84e888a03d358",
+          "label": {
+            "default": "Keine Sichtbehinderungen mit Gefahrenpotenzial​"
+          }
+        },
+        {
+          "id": "ad3cdf6e31ea45749160c605",
+          "label": {
+            "default": "Einzelne kleine Sichtbehinderungen mit Gefahrenpotenzial​"
+          }
+        },
+        {
+          "id": "8590d74aa4db4ebda56b8124",
+          "label": {
+            "default": "Entweder ein großes oder viele kleine Sichtbehinderungen mit Gefahrenpotenzial​"
+          }
+        },
+        {
+          "id": "d259eebb2f8449e3a1e32b48",
+          "label": {
+            "default": "Mehrere große Sichtbehinderungen mit Gefahrenpotenzial​"
+          }
+        },
+        {
+          "id": "3ed95675776f4ab2a4174f34",
+          "label": {
+            "default": "Viele große Sichtbehinderungen mit Gefahrenpotenzial und/oder stark verschwenkte Wegführung​"
+          }
+        },
+        {
+          "id": "9b0373f0101b4688ad94d33c",
+          "label": { "default": "Keine Kartierung möglich" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Einsehbarkeit</strong></b></p>"
+      },
+      "required": true,
+      "subheader": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">Gibt es (semi-permanente) Sichtbehinderungen, die zu erhöhtem Gefahrenpotenzial führen?​</span></p>"
+      },
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "3c5cfe5384c74071a27b8f35",
+          "actions": [
+            {
+              "id": "964cf215c34d4773b5710424",
+              "target": "f4ede6869518490793d7c592",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "2cc555c424394971ac438644",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "280e6d04e8a44241b22c69be",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "54b16f6d1b35465eaa70bbc4"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "9b0373f0101b4688ad94d33c"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "nf4q43gxbaczcto7s429kjyl"
+    },
+    {
+      "id": "f4ede6869518490793d7c592",
+      "type": "openText",
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Warum ist die Einsehbarkeit nicht kartierbar?</strong></b></p>"
+      },
+      "required": true,
+      "charLimit": { "enabled": false },
+      "inputType": "text",
+      "placeholder": { "default": "" },
+      "insightsEnabled": false
+    },
+    {
+      "id": "nf4q43gxbaczcto7s429kjyl",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "magkkft7kyfjsl61i9vhyko6",
+          "label": { "default": "Freie Sicht vor und im kritischen Bereich​" }
+        },
+        {
+          "id": "ae8b3jvrp35q4okwlgvjdmgp",
+          "label": {
+            "default": "Einzelne Hindernisse vor dem kritischen Bereich​"
+          }
+        },
+        {
+          "id": "s5okmr39a7fyw1s3ho3571fj",
+          "label": {
+            "default": "Einzelne Hindernisse im kritischen Bereich​"
+          }
+        },
+        {
+          "id": "lusscvnawgr9z8n4651ozxor",
+          "label": {
+            "default": "Weitgehend verdeckte Sicht im kritischen Bereich​"
+          }
+        },
+        {
+          "id": "cj2iv5f605dsi0k3o3xb0kxz",
+          "label": {
+            "default": "Durchgehend verdeckte Sicht im kritischen Bereich​"
+          }
+        },
+        {
+          "id": "gvuz1v4vlbe8va6ev0cwm4kv",
+          "label": { "default": "Keine Kartierung möglich" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">Sichtbeziehungen mit Rechtsabbiegenden​</span></p>"
+      },
+      "required": false,
+      "subheader": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">\"Kritischer Bereich\": 0-15m vor der Kreuzung</span></p>"
+      },
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "hklqj98rbvkyibxg9t0v5zed",
+          "actions": [
+            {
+              "id": "bs80ufg3ws4nmuyv9182tl52",
+              "target": "a62uq5ixf4eobdfjb0iefw4o",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "qxh6zvtn5ybdantglt2tacc8",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "w95y2lwats2ht88a7ld4kyfz",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "nf4q43gxbaczcto7s429kjyl"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "gvuz1v4vlbe8va6ev0cwm4kv"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "74b5a5db51fa4913a6a9f3bf",
+      "buttonLabel": { "default": "" },
+      "backButtonLabel": { "default": "" }
+    },
+    {
+      "id": "a62uq5ixf4eobdfjb0iefw4o",
+      "type": "openText",
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">Warum ist \"Sichtbeziehungen mit Rechtsabbiegenden\" nicht kartierbar?</span></p>"
+      },
+      "required": false,
+      "charLimit": { "enabled": false },
+      "inputType": "text",
+      "longAnswer": true,
+      "placeholder": { "default": "Type your answer here…" },
+      "insightsEnabled": false,
+      "buttonLabel": { "default": "" },
+      "backButtonLabel": { "default": "" }
+    },
+    {
+      "id": "74b5a5db51fa4913a6a9f3bf",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "9b92e1b91a2d40d98f584ade",
+          "label": {
+            "default": "Eindeutige Erkennbarkeit des Radroutenverlaufs und der Beschilderung"
+          }
+        },
+        {
+          "id": "16a4a1b785de4eb483b0caf6",
+          "label": {
+            "default": "Weitgehend eindeutige Erkennbarkeit des Radroutenverlaufs oder der Beschilderung"
+          }
+        },
+        {
+          "id": "fa5f30e76f0e4525830a739f",
+          "label": {
+            "default": "Nicht eindeutig erkennbarer Radroutenverlauf (suchen nötig)"
+          }
+        },
+        {
+          "id": "c6e12f8df4714de39c220b9f",
+          "label": { "default": "Radroutenverlauf nicht erkennbar" }
+        },
+        {
+          "id": "9650ae1dd1f844aeb1fb3863",
+          "label": { "default": "Fehlerhaft" }
+        },
+        {
+          "id": "290d8348b1674421b39483a8",
+          "label": { "default": "Keine Kartierung möglich" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Erkennbarkeit Radroutenverlauf</strong></b></p>"
+      },
+      "required": true,
+      "subheader": {
+        "default": "<table><colgroup><col style=\"width: 387px;\"></colgroup><tbody><tr><td style=\"width: 75px; border: 1px solid black; vertical-align: top; text-align: start;\"><p class=\"fb-editor-paragraph\" style=\"text-align: start;\"><span style=\"\">Wie gut erkenne ich,wo die Radroute 16 weiterverläuft?</span></p></td></tr></tbody></table>"
+      },
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "8f6c21e2474c419b83a19d4c",
+          "actions": [
+            {
+              "id": "15857c4ef5c94fa3933c9733",
+              "target": "e922b34126c94acb982e3c57",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "f01642ca9fa044f0aa4c6321",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "1ff0a82837b54a09974aa62a",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "74b5a5db51fa4913a6a9f3bf"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "290d8348b1674421b39483a8"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "3ff931faea514fcca598d295"
+    },
+    {
+      "id": "e922b34126c94acb982e3c57",
+      "type": "openText",
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Warum ist die Erkennbarkeit des Radroutenverlaufs nicht kartierbar?</strong></b></p>"
+      },
+      "required": true,
+      "charLimit": { "enabled": false },
+      "inputType": "text",
+      "placeholder": { "default": "" },
+      "insightsEnabled": false,
+      "logic": [
+        {
+          "id": "194932aac04f43bd8f333a13",
+          "actions": [
+            {
+              "id": "b3c6dbe73f69448faec974fa",
+              "target": "3ff931faea514fcca598d295",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "2ed6e3b25d9b4dc092bb8030",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "6b93d1b700c2466cbc932c73",
+                "operator": "isSubmitted",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "e922b34126c94acb982e3c57"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "3ff931faea514fcca598d295",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        {
+          "id": "ff2d93bbf41143eca6c07ca1",
+          "label": { "default": "Vorfahrt" }
+        },
+        {
+          "id": "bc4c554c746741c4a15e8ca4",
+          "label": { "default": "Kreisel" }
+        },
+        {
+          "id": "ac2a5fa3d8164ba1a73e1579",
+          "label": {
+            "default": "Ampel < 60 sek., Vorfahrt gewähren von einer Seite (z.B. rechts vor links)"
+          }
+        },
+        {
+          "id": "b03c06d269cb4e868815b277",
+          "label": {
+            "default": "Vorfahrt gewähren von beiden Seiten, Stop-Schild"
+          }
+        },
+        {
+          "id": "27a23c8b2c734b2b9399f445",
+          "label": {
+            "default": "Ampel > 60 sek. und/oder Bettelampel, Mehrere Ampeln pro Abschnitt"
+          }
+        },
+        {
+          "id": "9eb543b432f44f4a908601e1",
+          "label": { "default": "Keine Kreuzung/Einmündung vorhanden" }
+        },
+        {
+          "id": "8e78a20256f54de5a7364b22",
+          "label": { "default": "Keine Kartierung möglich" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Durchlässigkeit Kreuzung/Einmündung</strong></b></p>"
+      },
+      "required": true,
+      "subheader": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">Muss ich an einer Kreuzung/Einmündung halten, wenn ja wie lange?</span></p>"
+      },
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "a32547e4759f4d38a58d297d",
+          "actions": [
+            {
+              "id": "575a9d8984094457975e787b",
+              "target": "b828590cdbb44ef19a9cd85f",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "e80a9ba7771942babbcad8ba",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "77e9ea4f172a4a8595c46aaa",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "3ff931faea514fcca598d295"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "8e78a20256f54de5a7364b22"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "9e90a2e8151f4943b79b4723"
+    },
+    {
+      "id": "b828590cdbb44ef19a9cd85f",
+      "type": "openText",
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Warum ist die Durchlässigkeit nicht kartierbar?</strong></b></p>"
+      },
+      "required": true,
+      "charLimit": { "enabled": false },
+      "inputType": "text",
+      "placeholder": { "default": "" },
+      "insightsEnabled": false
+    },
+    {
+      "id": "9e90a2e8151f4943b79b4723",
+      "type": "multipleChoiceSingle",
+      "choices": [
+        { "id": "2670e59186274c25adfed9f2", "label": { "default": "nein" } },
+        { "id": "6378f0a726804792b632ae85", "label": { "default": "ja" } }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Besonderheit?</strong></b></p>"
+      },
+      "required": true,
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "3a7cca0b64da4782ba2dcf69",
+          "actions": [
+            {
+              "id": "0429467699c54f30824e1c90",
+              "target": "65d24eef91174451bd133729",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "108ae23a51a7407b986370f6",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "5351b56742f6489ab69df2c6",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "9e90a2e8151f4943b79b4723"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "6378f0a726804792b632ae85"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "198f2a6e930249259028a04d"
+    },
+    {
+      "id": "65d24eef91174451bd133729",
+      "type": "multipleChoiceMulti",
+      "choices": [
+        {
+          "id": "286590f0d9c741c294062de5",
+          "label": { "default": "Baustelle" }
+        },
+        {
+          "id": "e803bbf643eb4b8186b847bf",
+          "label": { "default": "Abschnitts-Split empfehlen" }
+        },
+        {
+          "id": "e7aa432651114401918fa0f0",
+          "label": {
+            "default": "Kartierung bitte überprüfen / Ergebnis unsicher"
+          }
+        },
+        {
+          "id": "2e03e0d28bdb4d268c6d679f",
+          "label": {
+            "default": "Gefahrenstelle: Konflikte mit MIV (motorisiertem Individualverkehr)​"
+          }
+        },
+        {
+          "id": "las5w7rt1i7tbcy46dtsevy2",
+          "label": { "default": "Gefahrenstelle: Konflikte mit Fussverkehr" }
+        },
+        {
+          "id": "ohsl3ovq9xyn3wa0qh9arha0",
+          "label": {
+            "default": "Gefahrenstelle: Konflikte mit kreuzendem Radverkehr​"
+          }
+        },
+        {
+          "id": "bm0re4rp9z8e9e0lx3v60h0f",
+          "label": { "default": "Gefahrenstelle: Konflikte mit Busverkehr​" }
+        },
+        {
+          "id": "l8qsbqfzdwg8gatwgc5ue23h",
+          "label": {
+            "default": "Gefahrenstelle: Konflikte mit Lieferverkehr​"
+          }
+        },
+        {
+          "id": "dd2e850a2f674be7b9b5291a",
+          "label": {
+            "default": "Sonstige Besonderheit (offene Angabe möglich)"
+          }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Welche Besonderheit liegt vor?</strong></b></p>"
+      },
+      "required": false,
+      "validation": { "logic": "and", "rules": [] },
+      "shuffleOption": "none",
+      "logic": [
+        {
+          "id": "y35a2bmyrc0z35p61v1m0lgs",
+          "actions": [
+            {
+              "id": "sno9ys0909x7dt05zblyfwbg",
+              "target": "0959b5b731de467bb21876bf",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "vcoks6ta7ohnm08yvdav3hfg",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "l12ovpfhye7gs4ylq4t34cys",
+                "operator": "includesOneOf",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "65d24eef91174451bd133729"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": ["dd2e850a2f674be7b9b5291a"]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "mlhemi0ialvwj5pgj9wc8ga2",
+          "actions": [
+            {
+              "id": "pkvxkz0977sam56jmz45riej",
+              "target": "1bdc04e019104d8c87d0e833",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "jm52vqc6z0sferj67e83ibi9",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "wcekqijbh9auk6fwl7bbihe3",
+                "operator": "includesOneOf",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "65d24eef91174451bd133729"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": ["e7aa432651114401918fa0f0"]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "kmakwupzy5nj95050gburfgu",
+          "actions": [
+            {
+              "id": "gqwtlj30ymr0uokwzhg2o1dh",
+              "target": "lenwj3zblue5eanlyxvsxo5v",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "vqrkwrxi0ukngq5n0ap5wurr",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "ofbaa69z8o5g098nj2jz70oh",
+                "operator": "equals",
+                "leftOperand": {
+                  "type": "question",
+                  "value": "65d24eef91174451bd133729"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": "e803bbf643eb4b8186b847bf"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "logicFallback": "198f2a6e930249259028a04d"
+    },
+    {
+      "id": "0959b5b731de467bb21876bf",
+      "type": "openText",
+      "headline": {
+        "default": "Welche? (Beschreibung der sonstigen Besonderheit)"
+      },
+      "required": false,
+      "charLimit": { "enabled": false },
+      "inputType": "text",
+      "subheader": {
+        "default": "Nur ausfüllen, falls 'Sonstige Besonderheit' gewählt."
+      },
+      "placeholder": { "default": "" },
+      "insightsEnabled": false,
+      "logic": [
+        {
+          "id": "nyp884msf9c90nlbl6oz0rg5",
+          "actions": [
+            {
+              "id": "yh59gy6o7k2n1qbhspl2zsv6",
+              "target": "198f2a6e930249259028a04d",
+              "objective": "jumpToQuestion"
+            }
+          ],
+          "conditions": {
+            "id": "khr3mqejzdhp54dnmyf6lwsz",
+            "connector": "and",
+            "conditions": [
+              {
+                "id": "thxdbtbcj7na4us0s08n70t6",
+                "operator": "doesNotIncludeOneOf",
+                "leftOperand": {
+                  "meta": { "type": "element" },
+                  "type": "question",
+                  "value": "65d24eef91174451bd133729"
+                },
+                "rightOperand": {
+                  "type": "static",
+                  "value": ["e7aa432651114401918fa0f0"]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "1bdc04e019104d8c87d0e833",
+      "type": "multipleChoiceMulti",
+      "choices": [
+        {
+          "id": "8a2d65c481284335a155d026",
+          "label": { "default": "Unebenheiten" }
+        },
+        {
+          "id": "de83cb9df653482986140eb3",
+          "label": { "default": "Dooring" }
+        },
+        {
+          "id": "7f12b25afe4040069c2f6ca3",
+          "label": { "default": "Einsehbarkeit" }
+        },
+        {
+          "id": "4d60326bb155429fad2f6161",
+          "label": { "default": "Erkennbarkeit Routenführung" }
+        },
+        {
+          "id": "c7379a9c2e954cbe8c2a98e3",
+          "label": { "default": "Durchlässigkeit Kreuzung" }
+        },
+        {
+          "id": "905531425a9c48cf864b287a",
+          "label": { "default": "Erkennbarkeit Verkehrsführung" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Welche Kriterien sollen wir hier überprüfen?</strong></b></p>"
+      },
+      "required": true,
+      "subheader": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">Nur ausfüllen, falls 'Kartierung bitte überprüfen' gewählt.</span></p>"
+      },
+      "shuffleOption": "none"
+    },
+    {
+      "id": "lenwj3zblue5eanlyxvsxo5v",
+      "type": "multipleChoiceMulti",
+      "choices": [
+        {
+          "id": "8a2d65c481284335a155d026",
+          "label": { "default": "Unebenheiten" }
+        },
+        {
+          "id": "de83cb9df653482986140eb3",
+          "label": { "default": "Dooring" }
+        },
+        {
+          "id": "7f12b25afe4040069c2f6ca3",
+          "label": { "default": "Einsehbarkeit" }
+        },
+        {
+          "id": "4d60326bb155429fad2f6161",
+          "label": { "default": "Erkennbarkeit Routenführung" }
+        },
+        {
+          "id": "c7379a9c2e954cbe8c2a98e3",
+          "label": { "default": "Durchlässigkeit Kreuzung" }
+        },
+        {
+          "id": "905531425a9c48cf864b287a",
+          "label": { "default": "Erkennbarkeit Verkehrsführung" }
+        }
+      ],
+      "headline": {
+        "default": "<p class=\"fb-editor-paragraph\"><b><strong class=\"fb-editor-text-bold\" style=\"\">Welches Kriterium ist urssächlich für einen \"Split\" des Abschnitts?</strong></b></p>"
+      },
+      "required": true,
+      "subheader": {
+        "default": "<p class=\"fb-editor-paragraph\"><span style=\"\">Nur ausfüllen, falls 'Abschnittssplit empfohlen' gewählt. Welches Kriterium kann nur kartiert werden, wenn der Abschnitt gesplittet wird?</span></p>"
+      },
+      "shuffleOption": "none"
+    }
+  ],
+  "blocks": [],
+  "endings": [
+    {
+      "id": "198f2a6e930249259028a04d",
+      "type": "endScreen",
+      "headline": { "default": "Vielen Dank!" },
+      "subheader": {
+        "default": "Ihre Kartierung wurde erfolgreich gespeichert."
+      }
+    }
+  ],
+  "hiddenFields": {
+    "enabled": true,
+    "fieldIds": [
+      "route_id",
+      "route_direction",
+      "segment_idx",
+      "segment_id",
+      "user",
+      "geometry_wkb"
+    ]
+  },
+  "variables": [],
+  "displayOption": "displayOnce",
+  "recontactDays": null,
+  "displayLimit": null,
+  "autoClose": null,
+  "delay": 0,
+  "displayPercentage": null,
+  "autoComplete": null,
+  "isVerifyEmailEnabled": false,
+  "isSingleResponsePerEmailEnabled": false,
+  "isBackButtonHidden": false,
+  "isCaptureIpEnabled": false,
+  "redirectUrl": null,
+  "projectOverwrites": null,
+  "styling": {
+    "roundness": 8,
+    "background": { "bg": "#001524", "bgType": "color", "brightness": 100 },
+    "brandColor": { "light": "#64748b" },
+    "inputColor": { "light": "#f3f4f6" },
+    "inputHeight": 20,
+    "inputShadow": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    "buttonHeight": "auto",
+    "isLogoHidden": false,
+    "buttonBgColor": { "light": "#64748b" },
+    "inputFontSize": 14,
+    "inputPaddingX": 8,
+    "inputPaddingY": 8,
+    "optionBgColor": { "light": "#f3f4f6" },
+    "questionColor": { "light": "#414b5a" },
+    "buttonFontSize": 16,
+    "buttonPaddingX": 12,
+    "buttonPaddingY": 12,
+    "inputTextColor": { "light": "#414b5a" },
+    "optionFontSize": 14,
+    "optionPaddingX": 16,
+    "optionPaddingY": 16,
+    "buttonTextColor": { "light": "#ffffff" },
+    "cardArrangement": { "appSurveys": "simple", "linkSurveys": "simple" },
+    "cardBorderColor": { "light": "#e0e3e8" },
+    "buttonFontWeight": 500,
+    "inputBorderColor": { "light": "#c1c7d1" },
+    "optionLabelColor": { "light": "#414b5a" },
+    "inputBorderRadius": 8,
+    "isDarkModeEnabled": false,
+    "optionBorderColor": { "light": "#c1c7d1" },
+    "buttonBorderRadius": 8,
+    "optionBorderRadius": 8,
+    "cardBackgroundColor": { "light": "#fafbfc" },
+    "progressTrackHeight": 8,
+    "elementHeadlineColor": { "light": "#414b5a" },
+    "highlightBorderColor": { "light": "#8b97a8" },
+    "progressTrackBgColor": { "light": "#e0e3e8" },
+    "overwriteThemeStyling": true,
+    "elementUpperLabelColor": { "light": "#414b5a" },
+    "elementDescriptionColor": { "light": "#414b5a" },
+    "elementHeadlineFontSize": 16,
+    "inputPlaceholderOpacity": 0.5,
+    "progressIndicatorBgColor": { "light": "#64748b" },
+    "elementHeadlineFontWeight": 600,
+    "elementUpperLabelFontSize": 12,
+    "elementDescriptionFontSize": 14,
+    "elementUpperLabelFontWeight": 400,
+    "elementDescriptionFontWeight": 400
+  },
+  "surveyClosedMessage": null,
+  "singleUse": { "enabled": false, "isEncrypted": true },
+  "pin": null,
+  "showLanguageSwitch": null,
+  "recaptcha": { "enabled": false, "threshold": 0.1 },
+  "metadata": {},
+  "customHeadScripts": null,
+  "customHeadScriptsMode": "add",
+  "languages": [],
+  "triggers": [],
+  "followUps": [],
+  "slug": null
+}
