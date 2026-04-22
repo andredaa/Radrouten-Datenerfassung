@@ -3,7 +3,7 @@ name = "backend"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = "==3.13"
 
 dependencies = [
     "fastapi[standard]",
@@ -15,6 +15,5 @@ dependencies = [
     "sqlalchemy>=2.0.44",
     "geoalchemy2",
     "uvicorn[standard]",
-    "openrouteservice>=2.3.3",
-    "fiona>=1.10.1",
+    "openrouteservice>=2.3.3"
 ]

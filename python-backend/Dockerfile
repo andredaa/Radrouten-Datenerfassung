@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.13
 
 WORKDIR /opt/api-gis
 
@@ -12,12 +12,13 @@ RUN sh /install.sh && mv /root/.local/bin/uv /usr/local/bin/uv && mv /root/.loca
 # set uv use system python
 ENV UV_SYSTEM_PYTHON=1
 
-COPY backend/pyproject.toml backend/uv.lock* ./
+COPY python-backend/main.py main.py
+COPY python-backend/pyproject.toml python-backend/uv.lock* ./
 
 # install dependencies
 RUN uv pip install --no-cache -r pyproject.toml
 
-COPY backend/ .
+COPY python-backend/ .
 
 # TODO add some more workers
-CMD ["uv", "run", "uvicorn", "server:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "5000"]
+CMD ["uvicorn", "server:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "5000"]
