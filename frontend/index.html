@@ -453,7 +453,7 @@
   <script>
     // Read backendUrl from URL parameter, fallback to localhost
     const urlParams = new URLSearchParams(window.location.search);
-    const backendUrl = urlParams.get('backendUrl') || 'localhost:5000'; // TOOD change to domain name
+    const backendUrl = urlParams.get('backendUrl') || 'http://localhost:5000'; // TOOD change to domain name
     console.log('Using backend URL:', backendUrl);
     
     const users = [
