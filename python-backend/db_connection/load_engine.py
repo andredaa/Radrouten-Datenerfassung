@@ -5,10 +5,10 @@ from sqlalchemy.engine import Engine
 from dotenv import load_dotenv
 from pathlib import Path
 
-# Load .env from parent directory
-env_path = Path(__file__).parent.parent / ".env"
-print(env_path)
-load_dotenv(env_path)
+# Only load .env for local development (not in Docker)
+if not os.getenv('DOCKER_ENV'):
+    env_path = Path(__file__).parent.parent.parent / ".env"
+    load_dotenv(env_path)
 
 
 # PostgreSQL connection details from environment variable
