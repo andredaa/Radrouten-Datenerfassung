@@ -29,12 +29,3 @@ def write_gdf_to_db(gdf: gpd.GeoDataFrame, table_name: str, if_exists: str ="rep
     print(f"GeoDataFrame written to table '{table_name}' in the database.")
 
 
-
-if __name__ == "__main__":
-    print("hello")
-    enable_postgis()
-    this_dir = Path(__file__).parent
-    gdf = gpd.read_file(this_dir / "all_routes_segmented 3.gpkg")
-    print(gdf.geometry)
-    gdf = gdf[gdf.geometry.is_valid]
-    write_gdf_to_db(gdf, "radrouten")

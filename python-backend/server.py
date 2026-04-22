@@ -10,6 +10,7 @@ from pydantic import BaseModel, ConfigDict
 
 
 from db_connection.get_from_postgis import geojson_from_db
+from db_connection.write_to_db import write_gdf_to_db
 
 
 
@@ -22,9 +23,27 @@ API to calculate indexes
 ---
 """
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup code here
+    print("Starting up...")
+
+    print("import radrouten to db")
+    this_dir = Path(__file__).parent
+    gdf = gpd.read_file(this_dir / "radrouten" / "all_routes_segmented.gpkg")
+    gdf = gdf[gdf.geometry.is_valid]
+    write_gdf_to_db(gdf, "radrouten")
+
+    print("Startup complete.")
+
+    # running the server
+    yield
+
+    # Shutdown code here
+    print("Shutting down FastAPI...")
 
 
-app = FastAPI(title="IMEQ-Backend", description=description)
+app = FastAPI(title="IMEQ-Backend", description=description, lifespan=lifespan)
 
 # Include routers
 
@@ -35,7 +54,7 @@ def root():
     return "success"
 
 
-origins = ["*"]
+origins = ["*"]  # TODO CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -43,6 +62,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
 
 
 @app.get("/get_layer")
