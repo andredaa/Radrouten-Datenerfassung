@@ -1,9 +1,10 @@
 DOCKER compose
 NOW
- - add volume for db data
+    DONE - add volume for db data
 - try locally
 
-- ADD FORMBRICKS!
+  DONE  - ADD FORMBRICKS!
+  - formbricks to main docker compose?
 
 LATER
  - add ngnix to 
@@ -21,22 +22,22 @@ LATER
 - add route to flag kartierung as invalid
 - get route to get kartier status
  
- DATAbase
- NOW
- - add radrouten segmented to database
- 
- LATER
- - add table to track kartierungen with timestamps and answer ids if possible
+DATAbase
+NOW
+- add radrouten segmented to database
+
+LATER
+- add table to track kartierungen with timestamps and answer ids if possible
 
 
 
 FRONTEND
 NOW
 - load data from backend
-    DONE- put real directions! 
-- serve with frontend with pyserver
+    DONE - put real directions! 
+    DONE - serve with frontend with pyserver
 - check wkb submission
-- add our formbricks url
+- add our new formbricks url
 
 LATER
 - add option to show route kartierung status
@@ -49,8 +50,18 @@ FORMBRICKS
 
 DATA
 NOW
-- check difference between our data and newest data
+    DONE - check difference between our data and newest data
+
+
 
 - TESTS
 - unit tests backend
 - e2e tests survey
+
+ORGA
+443 weltweit freigeben
+
+
+GITLAB 
+- add to uni hh gitlab
+- ci/cd
