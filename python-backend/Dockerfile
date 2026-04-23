@@ -12,7 +12,6 @@ RUN sh /install.sh && mv /root/.local/bin/uv /usr/local/bin/uv && mv /root/.loca
 # set uv use system python
 ENV UV_SYSTEM_PYTHON=1
 
-COPY python-backend/main.py main.py
 COPY python-backend/pyproject.toml python-backend/uv.lock* ./
 
 # install dependencies
