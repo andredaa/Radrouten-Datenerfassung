@@ -6,11 +6,12 @@ NOW
   DONE  - ADD FORMBRICKS!
   - formbricks to main docker compose?
 
-LATER
- - add ngnix to 
+  DONE  - add ngnix to 
     - listen 443
     - distribute to microservices
 
+NGINX
+    basic auth!
 
 BACKEND
 NOW
