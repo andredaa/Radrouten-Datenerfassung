@@ -413,11 +413,6 @@
       </select>
     </div>
     
-    <div class="form-group">
-      <label for="surveyUrlInput">Survey URL</label>
-      <input type="url" id="surveyUrlInput" placeholder="Enter survey URL" value="https://app.formbricks.com/s/nek51gwt02dxrmgqwxs10884?embed=true">
-    </div>
-    
     <button class="load-btn" id="loadRouteBtn">Load Route</button>
   </div>
 
@@ -453,9 +448,9 @@
   <script>
     // Read backendUrl from URL parameter, fallback to localhost
     const urlParams = new URLSearchParams(window.location.search);
-    const backendUrl = urlParams.get('backendUrl') || 'http://localhost/backend'; // TOOD change to domain name
-    const formbricksUrl = urlParams.get('formbricksUrl') || 'http://localhost/formbricks'; // TOOD change to domain name
-    const surveyId = urlParams.get('formbricksSurvey') || ''; // TOOD fill our survey id
+    const backendUrl = urlParams.get('backendUrl') || 'http://ml-s-bac.ad.uni-hamburg.de/backend';
+    const formbricksUrl = urlParams.get('formbricksUrl') || 'http://ml-s-bac.ad.uni-hamburg.de/formbricks';
+    const surveyId = urlParams.get('formbricksSurvey') || 'cmobkudkr000no601u3taqnu2'; 
 
     
     // build survey url like https://app.formbricks.com/s/nek51gwt02dxrmgqwxs10884?embed=true
@@ -550,7 +545,6 @@
     const userSelect = document.getElementById("userSelect");
     const routeSelect = document.getElementById("routeSelect");
     const directionSelect = document.getElementById("directionSelect");
-    const surveyUrlInput = document.getElementById("surveyUrlInput");
     const loadRouteBtn = document.getElementById("loadRouteBtn");
     const surveyModal = document.getElementById("surveyModal");
     const surveyIframe = document.getElementById("surveyIframe");
