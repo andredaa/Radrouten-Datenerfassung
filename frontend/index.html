@@ -453,8 +453,16 @@
   <script>
     // Read backendUrl from URL parameter, fallback to localhost
     const urlParams = new URLSearchParams(window.location.search);
-    const backendUrl = urlParams.get('backendUrl') || 'http://localhost:5000'; // TOOD change to domain name
+    const backendUrl = urlParams.get('backendUrl') || 'http://localhost/backend'; // TOOD change to domain name
+    const formbricksUrl = urlParams.get('formbricksUrl') || 'http://localhost/formbricks'; // TOOD change to domain name
+    const surveyId = urlParams.get('formbricksSurvey') || ''; // TOOD fill our survey id
+
+    
+    // build survey url like https://app.formbricks.com/s/nek51gwt02dxrmgqwxs10884?embed=true
+    const surveyUrl = `${formbricksUrl}/s/${surveyId}?embed=true`
+    
     console.log('Using backend URL:', backendUrl);
+    console.log('Using survey URL:', surveyUrl);
     
     const users = [
       "Jan",
@@ -475,7 +483,6 @@
     ]
     // Configuration
     const directionMapping = {
-      0: ["Schulung"],
       1: ["Ost", "West"],
       2: ["Nordwest", "Südost"],
       3: ["Nordwest", "Südost"],
@@ -610,10 +617,6 @@
     // Populate route select
     function populateRouteSelect() {
       routeSelect.innerHTML = "";
-      const schulung = document.createElement("option");
-      schulung.value = 0;
-      schulung.textContent = `Schulung`;
-      routeSelect.appendChild(schulung);
       for (let i = 1; i <= 23; i++) {
         const option = document.createElement("option");
         option.value = i;
@@ -844,7 +847,6 @@
 
     // Open survey modal
     function openSurveyModal(segmentId, geometryWkb, user) {
-      const surveyUrl = surveyUrlInput.value.trim();
       if (surveyUrl) {
         const url = new URL(surveyUrl);
         url.searchParams.set("user", user);
