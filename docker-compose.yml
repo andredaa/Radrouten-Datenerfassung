@@ -16,8 +16,9 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"      # Only nginx exposes ports to host
-      - "443:443"    # For HTTPS
+      # Only nginx exposes ports to host
+      - "80:80"      
+      - "443:443"
     networks:
       - bac_kartierung_net
       - formbricks_net
@@ -52,7 +53,6 @@ services:
 
   backend:
     build:
-      context: .
       dockerfile: python-backend/Dockerfile
     container_name: bac-kartierung-backend
     depends_on:
@@ -71,7 +71,6 @@ services:
 
   frontend:
     build:
-      context: .
       dockerfile: frontend/Dockerfile
     container_name: kartierung-frontend
     depends_on:
