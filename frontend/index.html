@@ -483,28 +483,28 @@
     ]
     // Configuration
     const directionMapping = {
-      0: ["Ost", "West"],
-      1: ["Nordwest", "Südost"],
+      1: ["Ost", "West"],
       2: ["Nordwest", "Südost"],
-      3: ["Nord", "Süd"],
-      4: ["Nordost", "Südwest"],
+      3: ["Nordwest", "Südost"],
+      4: ["Nord", "Süd"],
       5: ["Nordost", "Südwest"],
       6: ["Nordost", "Südwest"],
-      7: ["Nordwest", "Südost"],
+      7: ["Nordost", "Südwest"],
       8: ["Nordwest", "Südost"],
-      10: ["Nord", "Süd"],
+      9: ["Nordwest", "Südost"],
       11: ["Nord", "Süd"],
-      12: ["Nordwest", "Südost"],
-      13: ["Nordost", "Südwest"],
-      14: ["Nord", "Süd"],
-      15: ["Nordost", "Südwest"],
-      16: ["Nordwest", "Südost"],
-      17: ["Nord", "Süd"],
-      18: ["Nordost", "Südwest"],
-      19: ["Nord", "Süd"],
-      20: ["Ost", "West"],
-      21: ["Nordwest", "Südost"],
-      22: ["Nord", "Süd"],
+      12: ["Nord", "Süd"],
+      13: ["Nordwest", "Südost"],
+      14: ["Nordost", "Südwest"],
+      15: ["Nord", "Süd"],
+      16: ["Nordost", "Südwest"],
+      17: ["Nordwest", "Südost"],
+      18: ["Nord", "Süd"],
+      19: ["Nordost", "Südwest"],
+      20: ["Nord", "Süd"],
+      21: ["Ost", "West"],
+      22: ["Nordwest", "Südost"],
+      23: ["Nord", "Süd"],
     };
 
     const mapStyles = {
@@ -617,7 +617,7 @@
     // Populate route select
     function populateRouteSelect() {
       routeSelect.innerHTML = "";
-      for (let i = 0; i <= 22; i++) {
+      for (let i = 0; i <= 23; i++) {
         const option = document.createElement("option");
         option.value = i;
         option.textContent = `Route ${i}`;
