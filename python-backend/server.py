@@ -1,8 +1,10 @@
 from contextlib import asynccontextmanager
-import os
 from pathlib import Path
-from typing import List, Optional
+import os
 import uvicorn
+from typing import List, Optional
+
+import geopandas as gpd
 
 from fastapi import FastAPI, HTTPException, Query, Body
 from fastapi.middleware.cors import CORSMiddleware
