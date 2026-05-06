@@ -1,3 +1,20 @@
+DOKU
+- first steps:
+    - docker compose : 
+        - secrets for formbricks
+
+    formbricks
+    - register & create organization
+    - api key
+    - post survey 
+    curl --request POST   --url $YOUR_URL/api/v1/management/surveys   --header 'Content-Type: application/json'   --header 'x-api-key: fbk_$YOUR_KEY'   --data @formbricks_final_export_local.json
+
+
+    rebuild / deploy
+
+    formbricks itself
+
+
 DOCKER compose
 NOW
     DONE - add volume for db data
