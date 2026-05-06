@@ -92,7 +92,7 @@ def invalidate_previous_entries(
     # Convert naive timestamps from DB to Berlin timezone for comparison
     current_time = now_berlin()
     if timestamps and not any([
-        (current_time - to_berlin_time(timestamp)).total_seconds() < 10  # 60*20
+        (current_time - to_berlin_time(timestamp)).total_seconds() < 60*20
         for timestamp in timestamps
     ]):
         if not force_deleting_all_matching_entries:
