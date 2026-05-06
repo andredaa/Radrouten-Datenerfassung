@@ -7,8 +7,8 @@ export function initMap() {
   const map = new maplibregl.Map({
     container: "map",
     style: mapStyles[state.currentStyle],
-    center: [10.0, 51.5],
-    zoom: 6,
+    center: [9.9748145, 53.5682316],
+    zoom: 12,
     renderWorldCopies: false,
     attributionControl: true
   });
