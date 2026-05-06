@@ -10,9 +10,6 @@ function init() {
   populateRouteSelect();
   updateDirectionSelect();
   setupEventListeners();
-  
-  // Set initial selected direction
-  updateState({ selectedDirection: directionMapping[1][1] });
 }
 
 // Start the application when DOM is ready

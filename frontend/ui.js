@@ -44,7 +44,6 @@ export function updateDirectionSelect() {
     directionSelect.appendChild(option);
   });
   
-  updateState({ selectedDirection: directions[0] });
   directionSelect.value = state.selectedDirection;
 }
 
@@ -88,18 +87,21 @@ export function setupEventListeners() {
 
   // Load route button
   loadRouteBtn.addEventListener("click", () => {
-    if (state.selectedUser === "") {
+    if (!state.selectedUser) {
       alert("Select User!");
       return;
     }
-    if (state.selectedRouteId === "") {
+    if (!state.selectedRouteId) {
       alert("Select route id!");
       return;
     }
-    if (state.selectedDirection === "") {
+    if (!state.selectedDirection) {
       alert("Select direction!");
       return;
     }
+
+    console.log("state.selectedDirection", state.selectedDirection)
+
     loadRadroute();
     getCompletedSurveys();
     menuPanel.classList.remove("open");
