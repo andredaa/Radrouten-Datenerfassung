@@ -1,6 +1,7 @@
 import { backendUrl, surveyUrl } from './config.js';
 import { state, updateState } from './state.js';
 import { updateCompletedSurveysLayer } from './routes.js';
+import { stopwatch } from './stopwatch.js';
 
 // Track survey activity
 export async function trackSurveyActivity(user, segmentId, actionType) {
@@ -87,7 +88,6 @@ export function openSurveyModal(segmentId, geometryWkb, user) {
 // Close survey modal
 export function closeSurveyModal() {
   console.log("closing modal here here");
-  
   const surveyModal = document.getElementById("surveyModal");
   const surveyIframe = document.getElementById("surveyIframe");
 
@@ -110,6 +110,8 @@ export function closeSurveyModal() {
   // Clear iframe src to stop any playing content
   surveyIframe.src = "";
   updateState({ selectedFeature: null });
+  // clear stopwatch
+  stopwatch.reset();
 }
 
 // Close confirmation dialog

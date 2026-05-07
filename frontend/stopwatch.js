@@ -66,7 +66,7 @@ class Stopwatch {
 }
 
 // Initialize when DOM is ready
-let stopwatch;
+export let stopwatch;
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     stopwatch = new Stopwatch('stopwatchBtn');
