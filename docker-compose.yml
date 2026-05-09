@@ -1,8 +1,8 @@
 x-formbricks-environment: &formbricks-environment
   environment:
     # Formbricks Configuration
-    WEBAPP_URL: http://ml-s-bac.ad.uni-hamburg.de  # Update this with your actual domain
-    NEXTAUTH_URL: http://ml-s-bac.ad.uni-hamburg.de
+    WEBAPP_URL: https://h2870643.stratoserver.net
+    NEXTAUTH_URL: https://h2870643.stratoserver.net
     DATABASE_URL: "postgresql://postgres:postgres@formbricks-postgres:5432/formbricks?schema=public"
     NEXTAUTH_SECRET: __generate_me__
     ENCRYPTION_KEY: __generate_me__
@@ -39,8 +39,6 @@ services:
       POSTGRES_USER: ${POSTGIS_USER}
       POSTGRES_PASSWORD: ${POSTGIS_PASSWORD}
       POSTGRES_DB: ${POSTGIS_DB}
-    ports:
-      - 5432:5432
     volumes:
       - db_data:/var/lib/postgresql/data
 
