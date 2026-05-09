@@ -26,7 +26,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./certbot/certbot-temp:/var/www/certbot:ro
       - ./certbot/certbot-etc:/etc/letsencrypt:ro
-      - ./basic-auth-pw:/conf:ro
+      - ./basic-auth-pw:/basic-auth-pw:ro
     depends_on:
       - db
       - backend
