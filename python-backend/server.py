@@ -167,11 +167,15 @@ async def track_survey_activity(
         response_id = "%032x" % random.getrandbits(128)
         # response_id = get_formbricks_response_id(user, route_id, route_direction, start_time=datetime.datetime.now().date)
         create_survey_log(request.user, request.route_id, request.route_direction, request.segment_id, response_id) 
-    
+        
+        return {"response_id": response_id}
+
+
     if request.action == "delete":
         # use this also for survey correction
         invalidate_previous_entries(request.user, request.route_id, request.route_direction, request.segment_id)
-
+        return Response(status_code=200, content="OK") 
+    
     if request.action == "stop":
         pass
         """
@@ -192,8 +196,10 @@ async def track_survey_activity(
                 formbricks_data.get("data")
             )
         """
+
+        raise HTTPException(500, "Method not implemented")
     
-    return Response(status_code=200, content="OK") 
+    
 
 
     """

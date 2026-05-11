@@ -26,7 +26,7 @@ export async function trackSurveyActivity(user, segmentId, actionType) {
       console.error("Survey activity tracking received error from backend", response.status);
       return false;
     }
-    return true;
+    return response.json()
   } catch (e) {
     console.error("could not perform survey track", e);
     return false;
@@ -60,17 +60,20 @@ export function handleFeatureClick(e) {
 }
 
 // Open survey modal
-export function openSurveyModal(segmentId, geometryWkb, user) {
+export function openSurveyModal(segmentId, geometryWkb, user, responseIdBackend) {
   const surveyIframe = document.getElementById("surveyIframe");
   const modalTitle = document.getElementById("modalTitle");
   const surveyModal = document.getElementById("surveyModal");
   const confirmDialog = document.getElementById("confirmDialog");
+
+  console.log("response id survey", responseIdBackend)
 
   if (surveyUrl) {
     const url = new URL(surveyUrl);
     url.searchParams.set("user", user);
     url.searchParams.set("segment_id", segmentId);
     url.searchParams.set("geometry_wkb", geometryWkb);
+    url.searchParams.set("response_id_backend", responseIdBackend)
     url.searchParams.set("9e90a2e8151f4943b79b4723", "2670e59186274c25adfed9f2");
     surveyIframe.src = url.toString();
   }
