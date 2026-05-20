@@ -178,7 +178,7 @@ async def track_survey_activity(
         invalidate_previous_entries(
             request.user, request.route_id, request.route_direction, request.segment_id
         )
-        return Response(status_code=200, content={})
+        return {"delete": "OK"}
 
     if request.action == "stop":
         pass
