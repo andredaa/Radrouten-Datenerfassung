@@ -26,7 +26,11 @@ export async function trackSurveyActivity(user, segmentId, actionType) {
       console.error("Survey activity tracking received error from backend", response.status);
       return false;
     }
-    return response.json()
+    if (actionType == "start") {
+      return response.json()
+    }
+
+    return true;
   } catch (e) {
     console.error("could not perform survey track", e);
     return false;
