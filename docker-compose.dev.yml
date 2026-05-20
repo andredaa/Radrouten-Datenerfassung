@@ -1,0 +1,127 @@
+x-formbricks-environment: &formbricks-environment
+  environment:
+    # Formbricks Configuration
+    WEBAPP_URL: http://localhost
+    NEXTAUTH_URL: http://localhost
+    DATABASE_URL: "postgresql://postgres:postgres@formbricks-postgres:5432/formbricks?schema=public"
+    NEXTAUTH_SECRET: 6f1415771c13a26c7808fefb28167812d6e50ed4fc683bc67c171a8a3cd7c5c4
+    ENCRYPTION_KEY: 6f1415771c13a26c7808fefb28167812d6e50ed4fc683bc67c171a8a3cd7c5c4
+    CRON_SECRET: 6f1415771c13a26c7808fefb28167812d6e50ed4fc683bc67c171a8a3cd7c5c4
+    REDIS_URL: redis://redis:6379
+    NODE_OPTIONS: "--dns-result-order=ipv4first"
+    EMAIL_VERIFICATION_DISABLED: 1
+    PASSWORD_RESET_DISABLED: 1
+
+services:
+  db:
+    image: postgis/postgis
+    container_name: bac-karierung-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: BAC
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d BAC"]
+      interval: 10s
+      retries: 5
+      start_period: 40s
+    restart: always
+    networks:
+      - bac_kartierung_net
+
+  backend:
+    build:
+      dockerfile: python-backend/Dockerfile
+    container_name: bac-kartierung-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 5000:5000
+    environment:
+      POSTGIS_USER: postgres
+      POSTGIS_PASSWORD: 123456
+      POSTGIS_DB: BAC
+      DB_HOST: db
+      DB_PORT: 5432 # Ensure backend connects to the internal DB port
+
+    restart: always
+    networks:
+      - bac_kartierung_net
+
+  frontend:
+    build:
+      dockerfile: frontend/Dockerfile
+    container_name: kartierung-frontend
+    depends_on:
+      - backend
+    ports:
+      - 8080:8080
+    restart: always
+    networks:
+      - bac_kartierung_net
+
+  # Formbricks Services
+  formbricks-postgres:
+    restart: always
+    image: pgvector/pgvector:pg17
+    container_name: formbricks-postgres
+    volumes:
+      - formbricks_postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 30s
+    networks:
+      - formbricks_net
+
+  redis:
+    restart: always
+    image: valkey/valkey@sha256:12ba4f45a7c3e1d0f076acd616cb230834e75a77e8516dde382720af32832d6d
+    container_name: formbricks-redis
+    command: valkey-server --appendonly yes
+    volumes:
+      - formbricks_redis:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+    networks:
+      - formbricks_net
+
+  formbricks:
+    restart: always
+    image: ghcr.io/formbricks/formbricks:latest
+    container_name: formbricks
+    depends_on:
+      formbricks-postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - 80:80
+    volumes:
+      - ./formbricks-quickstart/saml-connection:/home/nextjs/apps/web/saml-connection
+    networks:
+      - formbricks_net
+      - bac_kartierung_net
+    <<: *formbricks-environment
+
+networks:
+  bac_kartierung_net:
+  formbricks_net:
+
+volumes:
+  db_data:
+  formbricks_postgres:
+  formbricks_redis:
