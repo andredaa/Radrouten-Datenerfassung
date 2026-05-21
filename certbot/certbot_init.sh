@@ -1,5 +1,12 @@
 LOG_FILE="$(pwd)/certbot.log"
 echo "Starting Certbot init process..."  >> $LOG_FILE 2>&1
+
+docker run -d \
+  --name nginx \
+  -p 80:80 \
+  -v $(pwd)/nginx_certbot_init.conf:/etc/nginx/conf.d/default.conf:ro \
+  nginx:alpine
+
 docker run --rm \
     -v $(pwd)/certbot-etc:/etc/letsencrypt \
     -v $(pwd)/certbot-var:/var/lib/letsencrypt \
