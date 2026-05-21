@@ -136,8 +136,9 @@ export function setupEventListeners() {
     if (state.selectedFeature) {
       const segmentId = state.selectedFeature.properties.segment_id;
       const geometryWkb = state.selectedFeature.properties.geometry_wkb;
-      trackSurveyActivity(state.selectedUser, segmentId, "start");
-      openSurveyModal(segmentId, geometryWkb, state.selectedUser);
+      trackSurveyActivity(state.selectedUser, segmentId, "start").then((trackResponse) => {
+        openSurveyModal(segmentId, geometryWkb, state.selectedUser, trackResponse["response_id"]);
+      });
     }
   });
 

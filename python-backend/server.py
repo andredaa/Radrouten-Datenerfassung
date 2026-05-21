@@ -1,26 +1,25 @@
+import os
+import random
 from contextlib import asynccontextmanager
 from pathlib import Path
-
-import datetime
-import random
-import os
-import uvicorn
-from typing import List, Literal, Optional
+from typing import Literal
 
 import geopandas as gpd
-
-from fastapi import FastAPI, HTTPException, Query, Body
+import uvicorn
+from fastapi import Body, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
 from geojson_pydantic import FeatureCollection
 from pydantic import BaseModel, ConfigDict
 
-
 from db_connection.get_from_postgis import geojson_from_db
+from db_connection.survey_logs import (
+    create_survey_log,
+    ensure_survey_logs_table_exists,
+    get_finished_segments_from_db,
+    invalidate_previous_entries,
+)
 from db_connection.write_to_db import write_gdf_to_db
-from db_connection.survey_logs import ensure_survey_logs_table_exists, get_finished_segments_from_db, create_survey_log, invalidate_previous_entries
-
-
 
 ENV = os.getenv("ENV", "development")  # "production" or "development"
 
@@ -31,6 +30,7 @@ API to calculate indexes
 ---
 """
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup code here
@@ -40,7 +40,7 @@ async def lifespan(app: FastAPI):
     this_dir = Path(__file__).parent
     gdf = gpd.read_file(this_dir / "radrouten" / "all_routes_segmented.gpkg")
     gdf = gdf[gdf.geometry.is_valid]
-    write_gdf_to_db(gdf, "radrouten")
+    write_gdf_to_db(gdf, "radrouten") # type: ignore
 
     ensure_survey_logs_table_exists()
 
@@ -54,6 +54,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="IMEQ-Backend", description=description, lifespan=lifespan)
+
 
 @app.get("/")
 def root():
@@ -70,19 +71,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/get_layer")
 async def get_layer(
     layer_name: str = Query(
         ..., description="Name of the layer to retrieve, e.g. 'radrouten' "
     ),
-    route_id: int = Query(
-        None, description="radrouten id"
-    ),
+    route_id: int = Query(None, description="radrouten id"),
     direction: str = Query(
-        None, 
-        description=(
-            "route direction"
-        ),
+        None,
+        description=("route direction"),
     ),
 ) -> FeatureCollection:
     """Return a GeoJSON FeatureCollection for the requested layer and city.
@@ -90,34 +88,31 @@ async def get_layer(
     Query parameter descriptions above are shown in the OpenAPI docs.
     """
     try:
-        return geojson_from_db(table_name=layer_name, route_id=route_id, direction=direction)
+        return geojson_from_db(
+            table_name=layer_name, route_id=route_id, direction=direction
+        )
     except Exception as e:
         print(f"Error: {e}")
         # TODO better error handling. 404, 500, ...
-        raise HTTPException(404, f"Error fetching layer {layer_name} {route_id} {direction} from db: {e}")
+        raise HTTPException(
+            404,
+            f"Error fetching layer {layer_name} {route_id} {direction} from db: {e}",
+        ) from e
 
 
 @app.get("/get_finished_segments")
 async def get_finished_segments(
-    route_id: int = Query(
-        None,
-        description="radrouten id"
-    ),
+    route_id: int = Query(None, description="radrouten id"),
     direction: str = Query(
-        None, 
-        description=(
-            "route direction"
-        ),
+        None,
+        description=("route direction"),
     ),
     user: str = Query(
-        None, 
-        description=(
-            "team member"
-        ),
-    )
-) -> List[str]:
+        None,
+        description=("team member"),
+    ),
+) -> list[str]:
     return get_finished_segments_from_db(route_id, direction, user)
-
 
 
 class SurveyActivity(BaseModel):
@@ -130,7 +125,7 @@ class SurveyActivity(BaseModel):
                 "segment_id": "1_Ost_99",
                 "action": "start",
                 "route_id": 1,
-                "route_direction": "Ost"
+                "route_direction": "Ost",
             }
         }
     )
@@ -140,7 +135,7 @@ class SurveyActivity(BaseModel):
     route_id: int
     route_direction: str
     action: Literal["start", "stop", "delete"]
-    formbricks_response_id: Optional[str] = None
+    formbricks_response_id: str | None = None
 
 
 @app.post("/track_survey_activity")
@@ -157,20 +152,33 @@ async def track_survey_activity(
     - action: 'delete' or 'start' or 'stop'
     - formbricks_response_id: None|str
     """
-    print(f"Tracking survey activity for segment {request.segment_id} by {request.user}: {request.action}")
+    print(
+        f"Tracking survey activity for segment {request.segment_id} by {request.user}: {request.action}"
+    )
 
     if request.action == "start":
         # check if we already can get the response id from the user, route_direction and route_id info
         # then return response id
-        
+
         # TEMP FIX : for a quick solution that only has start and delete : fake response id.
         response_id = "%032x" % random.getrandbits(128)
         # response_id = get_formbricks_response_id(user, route_id, route_direction, start_time=datetime.datetime.now().date)
-        create_survey_log(request.user, request.route_id, request.route_direction, request.segment_id, response_id) 
-    
+        create_survey_log(
+            request.user,
+            request.route_id,
+            request.route_direction,
+            request.segment_id,
+            response_id,
+        )
+
+        return {"response_id": response_id}
+
     if request.action == "delete":
         # use this also for survey correction
-        invalidate_previous_entries(request.user, request.route_id, request.route_direction, request.segment_id)
+        invalidate_previous_entries(
+            request.user, request.route_id, request.route_direction, request.segment_id
+        )
+        return {"delete": "OK"}
 
     if request.action == "stop":
         pass
@@ -192,9 +200,8 @@ async def track_survey_activity(
                 formbricks_data.get("data")
             )
         """
-    
-    return Response(status_code=200, content="OK") 
 
+        raise HTTPException(500, "Method not implemented")
 
     """
     TODO get survey_finished status / non-invalidaded survey_entry exists status for route,direction and user
@@ -202,9 +209,6 @@ async def track_survey_activity(
 
     TODO tests
     """
-
-
-
 
 
 if __name__ == "__main__":

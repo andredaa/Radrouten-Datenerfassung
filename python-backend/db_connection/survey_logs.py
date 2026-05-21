@@ -112,7 +112,7 @@ def create_survey_log(
     segment_id: str,
     response_id: str,
     formbricks_data: dict = None
-):
+) -> str:
     """Insert a new survey log entry into the database."""
     print("creating survey log")
     engine = get_engine()
@@ -158,6 +158,8 @@ def create_survey_log(
         conn.commit()
     
     print(f"Survey log created for response_id: {response_id}")
+
+    return response_id
 
 
 

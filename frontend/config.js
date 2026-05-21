@@ -71,8 +71,8 @@ export const mapStyles = {
 
 // Read backendUrl from URL parameter, fallback to localhost
 const urlParams = new URLSearchParams(window.location.search);
-export const backendUrl = urlParams.get('backendUrl') || 'http://ml-s-bac.ad.uni-hamburg.de/backend';
-export const formbricksUrl = urlParams.get('formbricksUrl') || 'http://ml-s-bac.ad.uni-hamburg.de/formbricks';
+export const backendUrl = urlParams.get('backendUrl') || 'https://h2870643.stratoserver.net/backend';
+export const formbricksUrl = urlParams.get('formbricksUrl') || 'https://h2870643.stratoserver.net/formbricks';
 export const surveyId = urlParams.get('formbricksSurvey') || 'cmobkudkr000no601u3taqnu2';
 export const surveyUrl = `${formbricksUrl}/s/${surveyId}?embed=true`;
 
