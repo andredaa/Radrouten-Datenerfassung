@@ -2,6 +2,7 @@ import { users, directionMapping } from './config.js';
 import { state, updateState } from './state.js';
 import { switchMapStyle } from './map.js';
 import { loadRadroute, getCompletedSurveys } from './routes.js';
+import { loadRadrouteStatus } from './allRoutesStatus.js';
 import { openSurveyModal, closeSurveyModal, closeDialog, trackSurveyActivity } from './survey.js';
 import { updateCompletedSurveysLayer } from './routes.js';
 
@@ -55,6 +56,7 @@ export function setupEventListeners() {
   const routeSelect = document.getElementById("routeSelect");
   const directionSelect = document.getElementById("directionSelect");
   const loadRouteBtn = document.getElementById("loadRouteBtn");
+  const loadRouteStatusBtn = document.getElementById("loadRouteStatusBtn");
   const surveyModal = document.getElementById("surveyModal");
   const closeModal = document.getElementById("closeModal");
   const closeModalFooter = document.getElementById("closeModalFooter");
@@ -104,6 +106,12 @@ export function setupEventListeners() {
 
     loadRadroute();
     getCompletedSurveys();
+    menuPanel.classList.remove("open");
+  });  
+  
+  // Load route status button
+  loadRouteStatusBtn.addEventListener("click", () => {
+    loadRadrouteStatus();
     menuPanel.classList.remove("open");
   });
 
