@@ -1,0 +1,6 @@
+services:
+  fix-perms:
+    image: alpine
+    command: chown -R 7081709:7081709 ./certbot   # replace with your UID
+    volumes:
+      - ./certbot:/certbot
