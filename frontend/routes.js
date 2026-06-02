@@ -71,9 +71,9 @@ export async function loadRadroute() {
       type: "line",
       source: "radroute-source",
       paint: {
-        "line-color": "#000000",
+        "line-color": "#e00f93",
         "line-width": 4,
-        "line-opacity": 0.8,
+        "line-opacity": 1,
       },
       filter: ["in", "segment_id"],
     });
@@ -113,7 +113,13 @@ export async function loadRadroute() {
       layout: {
         "text-field": ["get", "segment_idx"],
         "text-size": 14,
-        "text-offset": [0, -1.5],
+        "text-offset": [
+        0,
+        ["interpolate", ["linear"], ["zoom"],
+          10, -0.8,  // smaller offset at zoom 10
+          16, -1.5   // larger offset at zoom 16
+        ]
+      ],
         "symbol-placement": "line-center",
       },
       paint: {
