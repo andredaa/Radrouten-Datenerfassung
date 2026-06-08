@@ -65,12 +65,18 @@ class Stopwatch {
   }
 }
 
-// Initialize when DOM is ready
+// Initialize when DOM is ready (only if button exists)
 export let stopwatch;
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
-    stopwatch = new Stopwatch('stopwatchBtn');
+    const stopwatchBtn = document.getElementById('stopwatchBtn');
+    if (stopwatchBtn) {
+      stopwatch = new Stopwatch('stopwatchBtn');
+    }
   });
 } else {
-  stopwatch = new Stopwatch('stopwatchBtn');
+  const stopwatchBtn = document.getElementById('stopwatchBtn');
+  if (stopwatchBtn) {
+    stopwatch = new Stopwatch('stopwatchBtn');
+  }
 }

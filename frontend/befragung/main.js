@@ -1,11 +1,13 @@
 import { initMap, switchMapStyle } from '../map.js';
-import { state } from '../state.js';
+import { state, updateState } from '../state.js';
 import { populateLocationSelect, setupEventListeners, initLocationsLayer } from './ui_befragung.js';
 
 // Initialize application
 function init() {
   // Initialize the map first
   initMap();
+  updateState({use: "befragung"});
+  
   
   // Wait for map to load before adding layers
   state.map.on('load', () => {
