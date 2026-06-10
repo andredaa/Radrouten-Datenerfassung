@@ -117,8 +117,10 @@ export function closeSurveyModal() {
   // Clear iframe src to stop any playing content
   surveyIframe.src = "";
   updateState({ selectedFeature: null });
-  // clear stopwatch
-  stopwatch.reset();
+  // clear stopwatch (if it exists)
+  if (stopwatch) {
+    stopwatch.reset();
+  }
 }
 
 // Close confirmation dialog

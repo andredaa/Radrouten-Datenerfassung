@@ -1,0 +1,9 @@
+curl --request GET \
+  --url https://app.formbricks.com/api/v2/management/responses/cmnpvdopfkx4psy01fg30pae6 \
+  --header 'x-api-key: fbk_PXiY7f9hSBIpEz7eI4FDIORLFNZ50BbKG4MX7bPORXU'
+
+
+question id and value
+74b5a5db51fa4913a6a9f3bf 290d8348b1674421b39483a8
+
+e922b34126c94acb982e3c57

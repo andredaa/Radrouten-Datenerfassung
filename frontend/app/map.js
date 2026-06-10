@@ -2,6 +2,8 @@ import { mapStyles } from './config.js';
 import { state, updateState } from './state.js';
 import { loadRadroute } from './routes.js';
 import { loadRadrouteStatus } from './allRoutesStatus.js';
+import { initLocationsLayer } from './befragung/ui_befragung.js';
+import { initBikeShopsLayer } from './bike-shops/ui_bikeshops.js';
 
 // Initialize map
 export function initMap() {
@@ -58,10 +60,17 @@ export function switchMapStyle(style) {
     }
   });
   
+
   state.map.setStyle(mapStyles[style]);
   
   // Wait for style to load before adding routes
   setTimeout(() => {
-    loadRadroute();
+    if (state.use == "befragung") {
+      initLocationsLayer();
+    } else if (state.use == "bike-shops") {
+      initBikeShopsLayer();
+    } else {
+      loadRadroute();
+    }
   }, 500);
 }
