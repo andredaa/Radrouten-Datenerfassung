@@ -85,6 +85,12 @@ echo "Starting database restoration..."
 echo "========================================"
 echo ""
 
+# Stop containers that have open database connections
+echo "Stopping containers with database connections..."
+docker stop bac-kartierung-backend formbricks 2>/dev/null || true
+echo "  ✓ Containers stopped"
+echo ""
+
 # === Restore Kartierung Database ===
 echo "[1/2] Restoring Kartierung database..."
 
@@ -139,6 +145,13 @@ echo "  Restoring backup..."
 gunzip < "${FORMBRICKS_BACKUP}" | docker exec -i "${FORMBRICKS_CONTAINER}" psql -U postgres -d formbricks
 
 echo "  ✓ Formbricks database restored successfully!"
+
+# Restart containers
+echo "Restarting application containers..."
+docker start bac-kartierung-backend formbricks
+echo "  ✓ Containers restarted"
+echo ""
+
 echo ""
 
 echo "========================================"
