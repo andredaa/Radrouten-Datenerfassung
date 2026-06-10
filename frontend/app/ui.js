@@ -181,6 +181,7 @@ export function setupEventListeners() {
     }
   });
 
+  /**
   dialogEditResponse.addEventListener("click", () => {
     if (state.selectedFeature && state.selectedFeature.properties.segment_id) {
       const segmentId = state.selectedFeature.properties.segment_id;
@@ -196,7 +197,6 @@ export function setupEventListeners() {
       new frontend logic:
         - do survey as normal, just pass the prefilled answers as new param to the openSurveyModal function.
         - open formbricks survey for segment, include all entries from backend's response json as url params (prefilled)
-      */
 
       /**
        * weiteres feature:
@@ -213,7 +213,7 @@ export function setupEventListeners() {
           radweg_art: same
           zweirichtung: same
        * 
-       */
+
 
       trackSurveyActivity(state.selectedUser, segmentId, "delete").then((success) => {
         if (success) {
@@ -226,6 +226,8 @@ export function setupEventListeners() {
       closeDialog();
     }
   });
+
+  */
 
   // Close dialog on overlay click
   confirmDialog.addEventListener("click", (e) => {
