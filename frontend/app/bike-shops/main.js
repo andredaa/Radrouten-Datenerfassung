@@ -1,5 +1,5 @@
-import { initMap, switchMapStyle } from '../map.js';
-import { state, updateState } from '../state.js';
+import { initMap, switchMapStyle } from '../../map.js';
+import { state, updateState } from '../../state.js';
 import { setupEventListeners, initBikeShopsLayer } from './ui_bikeshops.js';
 
 // Initialize application

@@ -1,8 +1,6 @@
 FROM python:latest
 
-COPY frontend/index.html /
-COPY frontend/kartierschluessel.pdf /
-COPY frontend/*.js /
+COPY frontend/app /
 
 EXPOSE 8080
 CMD python -m http.server 8080
