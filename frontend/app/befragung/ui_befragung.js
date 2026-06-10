@@ -2,8 +2,6 @@ import { switchMapStyle } from '../map.js';
 import { state, updateState } from '../state.js';
 import { locationsGeoJson } from './locationsData.js';
 
-updateState({use: "befragung"});
-
 // Extract unique location names from locationsGeoJson
 const locations = [...new Set(
   locationsGeoJson.features
