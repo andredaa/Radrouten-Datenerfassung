@@ -97,18 +97,18 @@ docker exec "${KARTIERUNG_CONTAINER}" pg_isready -U "${POSTGIS_USER}" -d postgre
 
 # Drop and recreate database
 echo "  Dropping existing database..."
-docker exec "${KARTIERUNG_CONTAINER}" psql -U "${POSTGIS_USER}" -c "DROP DATABASE IF EXISTS \"${POSTGIS_DB}\";"
+docker exec "${KARTIERUNG_CONTAINER}" psql -U "${POSTGIS_USER}" -d postgres -c "DROP DATABASE IF EXISTS \"${POSTGIS_DB}\";"
 
 echo "  Creating fresh database..."
-docker exec "${KARTIERUNG_CONTAINER}" psql -U "${POSTGIS_USER}" -c "CREATE DATABASE \"${POSTGIS_DB}\";"
+docker exec "${KARTIERUNG_CONTAINER}" psql -U "${POSTGIS_USER}" -d postgres -c "CREATE DATABASE \"${POSTGIS_DB}\";"
 
 # Enable PostGIS extension
 echo "  Enabling PostGIS extension..."
-docker exec "${KARTIERUNG_CONTAINER}" psql -U "${POSTGIS_USER}" -d "\"${POSTGIS_DB}\"" -c "CREATE EXTENSION IF NOT EXISTS postgis;"
+docker exec "${KARTIERUNG_CONTAINER}" psql -U "${POSTGIS_USER}" -d "${POSTGIS_DB}" -c "CREATE EXTENSION IF NOT EXISTS postgis;"
 
 # Restore the backup
 echo "  Restoring backup..."
-gunzip < "${KARTIERUNG_BACKUP}" | docker exec -i "${KARTIERUNG_CONTAINER}" psql -U "${POSTGIS_USER}" -d "\"${POSTGIS_DB}\""
+gunzip < "${KARTIERUNG_BACKUP}" | docker exec -i "${KARTIERUNG_CONTAINER}" psql -U "${POSTGIS_USER}" -d "${POSTGIS_DB}"
 
 echo "  ✓ Kartierung database restored successfully!"
 echo ""
@@ -146,7 +146,7 @@ echo "✓ All databases restored successfully!"
 echo "========================================"
 echo ""
 echo "Verifying Kartierung tables..."
-docker exec "${KARTIERUNG_CONTAINER}" psql -U "${POSTGIS_USER}" -d "\"${POSTGIS_DB}\"" -c "\dt"
+docker exec "${KARTIERUNG_CONTAINER}" psql -U "${POSTGIS_USER}" -d "${POSTGIS_DB}" -c "\dt"
 echo ""
 echo "Verifying Formbricks tables..."
 docker exec "${FORMBRICKS_CONTAINER}" psql -U postgres -d formbricks -c "\dt"
