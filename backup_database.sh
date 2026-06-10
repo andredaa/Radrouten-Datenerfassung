@@ -10,35 +10,61 @@ if [ -f .env ]; then
 fi
 
 # Configuration
-CONTAINER_NAME="bac-karierung-db"
+KARTIERUNG_CONTAINER="bac-karierung-db"
+FORMBRICKS_CONTAINER="formbricks-postgres"
 BACKUP_DIR="./backups"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-BACKUP_FILE="${BACKUP_DIR}/kartierung_backup_${TIMESTAMP}.sql.gz"
+KARTIERUNG_BACKUP_FILE="${BACKUP_DIR}/kartierung_backup_${TIMESTAMP}.sql.gz"
+FORMBRICKS_BACKUP_FILE="${BACKUP_DIR}/formbricks_backup_${TIMESTAMP}.sql.gz"
 
 # Create backup directory if it doesn't exist
 mkdir -p "${BACKUP_DIR}"
 
-echo "Starting database backup..."
-echo "Container: ${CONTAINER_NAME}"
-echo "Database: ${POSTGIS_DB}"
-echo "Backup file: ${BACKUP_FILE}"
+echo "Starting database backups..."
+echo "Timestamp: ${TIMESTAMP}"
+echo ""
 
-# Create compressed SQL dump
-docker exec "${CONTAINER_NAME}" pg_dump \
+# Backup Kartierung Database
+echo "[1/2] Backing up Kartierung database..."
+echo "  Container: ${KARTIERUNG_CONTAINER}"
+echo "  Database: ${POSTGIS_DB}"
+echo "  File: ${KARTIERUNG_BACKUP_FILE}"
+
+docker exec "${KARTIERUNG_CONTAINER}" pg_dump \
     -U "${POSTGIS_USER}" \
     -d "${POSTGIS_DB}" \
     --format=plain \
     --no-owner \
     --no-acl \
-    | gzip > "${BACKUP_FILE}"
+    | gzip > "${KARTIERUNG_BACKUP_FILE}"
 
-# Get file size
-FILESIZE=$(du -h "${BACKUP_FILE}" | cut -f1)
-
-echo "✓ Backup completed successfully!"
-echo "  File: ${BACKUP_FILE}"
-echo "  Size: ${FILESIZE}"
-
+KARTIERUNG_SIZE=$(du -h "${KARTIERUNG_BACKUP_FILE}" | cut -f1)
+echo "  ✓ Kartierung backup completed (${KARTIERUNG_SIZE})"
 echo ""
-echo "Backup summary:"
-ls -lh "${BACKUP_DIR}"/kartierung_backup_*.sql.gz | tail -n 5
+
+# Backup Formbricks Database
+echo "[2/2] Backing up Formbricks database..."
+echo "  Container: ${FORMBRICKS_CONTAINER}"
+echo "  Database: formbricks"
+echo "  File: ${FORMBRICKS_BACKUP_FILE}"
+
+docker exec "${FORMBRICKS_CONTAINER}" pg_dump \
+    -U postgres \
+    -d formbricks \
+    --format=plain \
+    --no-owner \
+    --no-acl \
+    | gzip > "${FORMBRICKS_BACKUP_FILE}"
+
+FORMBRICKS_SIZE=$(du -h "${FORMBRICKS_BACKUP_FILE}" | cut -f1)
+echo "  ✓ Formbricks backup completed (${FORMBRICKS_SIZE})"
+echo ""
+
+echo "========================================"
+echo "✓ All backups completed successfully!"
+echo "========================================"
+echo "Kartierung: ${KARTIERUNG_BACKUP_FILE} (${KARTIERUNG_SIZE})"
+echo "Formbricks: ${FORMBRICKS_BACKUP_FILE} (${FORMBRICKS_SIZE})"
+echo ""
+echo "Recent backups:"
+ls -lh "${BACKUP_DIR}"/*_backup_*.sql.gz | tail -n 10
