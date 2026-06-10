@@ -1,5 +1,5 @@
-import { switchMapStyle } from '../../map.js';
-import { state, updateState } from '../../state.js';
+import { switchMapStyle } from '../map.js';
+import { state, updateState } from '../state.js';
 import { bikeShopsGeoJson } from './bikeShopsData.js';
 
 // Show bike shop info panel with all properties
