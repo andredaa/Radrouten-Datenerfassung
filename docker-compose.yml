@@ -1,8 +1,8 @@
 x-formbricks-environment: &formbricks-environment
   environment:
     # Formbricks Configuration
-    WEBAPP_URL: https://h2870643.stratoserver.net
-    NEXTAUTH_URL: https://h2870643.stratoserver.net
+    WEBAPP_URL: https://bike-access-check.uni-hamburg.de
+    NEXTAUTH_URL: https://bike-access-check.uni-hamburg.de
     DATABASE_URL: "postgresql://postgres:postgres@formbricks-postgres:5432/formbricks?schema=public"
     NEXTAUTH_SECRET: __generate_me__
     ENCRYPTION_KEY: __generate_me__
