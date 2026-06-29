@@ -196,22 +196,6 @@ export const locationsGeoJson = {
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.207228742227109,
-          53.489376462380655
-        ]
-      },
-      "properties": {
-        "description": "",
-        "alternativ_location": false,
-        "standort_kategorie": "außen",
-        "stadtteil": "Bergedorf"
-      }
-    },
-    {
-      "type": "Feature",
       "properties": {
         "description": "",
         "alternativ_location": false,
@@ -463,6 +447,49 @@ export const locationsGeoJson = {
         "coordinates": [
           9.8068214,
           53.5578548
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "description": "Standort noch unklar",
+        "stadtteil": "Blankenese",
+        "standort_kategorie": "außen"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.8068214,
+          53.5578548
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "description": "Nachmittags (evt. gegenüberl. Strassenseite besser=)",
+        "stadtteil": "HafenCity"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9995396,
+          53.5411544
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stadtteil": "Langenhorn",
+        "description": "evtl. auch auf andere Straßenseite aufteilen"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.01815376315903,
+          53.5404036
         ]
       }
     }
