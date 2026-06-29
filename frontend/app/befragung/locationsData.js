@@ -22,12 +22,27 @@ export const locationsGeoJson = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.182563,
-          53.631122
+          10.154580907114198,
+          53.603294691171826
         ]
       },
       "properties": {
-        "description": "",
+        "description": "Rahlstedt 1",
+        "alternativ_location": false,
+        "standort_kategorie": "außerhalb",
+        "stadtteil": "Rahlstedt"
+      }
+    },{
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.13691723247652,
+          53.600481079149475 
+        ]
+      },
+      "properties": {
+        "description": "Rahlstedt 2",
         "alternativ_location": false,
         "standort_kategorie": "außerhalb",
         "stadtteil": "Rahlstedt"
