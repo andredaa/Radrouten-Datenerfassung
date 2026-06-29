@@ -38,22 +38,6 @@ export const locationsGeoJson = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.010473,
-          53.648864
-        ]
-      },
-      "properties": {
-        "description": "",
-        "alternativ_location": true,
-        "standort_kategorie": "außerhalb",
-        "stadtteil": "Langenhorn"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           9.977546,
           53.461009
         ]
@@ -223,22 +207,6 @@ export const locationsGeoJson = {
         "coordinates": [
           10.182563,
           53.631122
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "description": "",
-        "alternativ_location": false,
-        "standort_kategorie": "außerhalb",
-        "stadtteil": "Langenhorn"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.010473,
-          53.648864
         ]
       }
     },
@@ -453,22 +421,21 @@ export const locationsGeoJson = {
     {
       "type": "Feature",
       "properties": {
-        "description": "Standort noch unklar",
-        "stadtteil": "Blankenese",
-        "standort_kategorie": "außen"
+        "stadtteil": "HafenCity",
+        "description": "vormittags"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.8068214,
-          53.5578548
+          10.0073366,
+          53.5404339
         ]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "description": "Nachmittags (evt. gegenüberl. Strassenseite besser=)",
+        "description": "Nachmittags. Evt. gegenüberl. Strassenseite besser)",
         "stadtteil": "HafenCity"
       },
       "geometry": {
@@ -489,7 +456,7 @@ export const locationsGeoJson = {
         "type": "Point",
         "coordinates": [
           10.01815376315903,
-          53.5404036
+          53.6495777202932
         ]
       }
     }
