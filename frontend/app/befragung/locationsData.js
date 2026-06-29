@@ -162,22 +162,7 @@ export const locationsGeoJson = {
         "stadtteil": "Winterhude"
       }
     },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.058361199251138,
-          53.61164892822772
-        ]
-      },
-      "properties": {
-        "description": "",
-        "alternativ_location": false,
-        "standort_kategorie": "äußerer Nahbereich",
-        "stadtteil": "Steilshoop"
-      }
-    },
+
     {
       "type": "Feature",
       "properties": {
