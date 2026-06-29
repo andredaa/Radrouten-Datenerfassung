@@ -76,7 +76,7 @@ export const locationsGeoJson = {
       },
       "properties": {
         "description": "",
-        "alternativ_location": true,
+        "alternativ_location": false,
         "standort_kategorie": "äußerer Nahbereich",
         "stadtteil": "Horn",
         "delete": ""
@@ -358,7 +358,7 @@ export const locationsGeoJson = {
     {
       "type": "Feature",
       "properties": {
-        "description": "",
+        "description": "Schaut euch mal um, ob es in der Nähe Stellen mit mehr Radverkehr gibt",
         "alternativ_location": false,
         "standort_kategorie": "äußerer Nahbereich",
         "stadtteil": "Steilshoop"
@@ -366,8 +366,8 @@ export const locationsGeoJson = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.058361199251138,
-          53.61164892822772
+          10.0573623,
+          53.6136071
         ]
       }
     },
