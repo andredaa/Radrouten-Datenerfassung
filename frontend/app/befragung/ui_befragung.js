@@ -42,7 +42,7 @@ export function showLocationDialog(feature) {
   
   // Set title and message
   dialogTitle.textContent = feature.properties.stadtteil || "Location";
-  dialogMessage.textContent = feature.properties.description || "Beim Fahrradständer vorm ALDI";
+  dialogMessage.textContent = feature.properties.description;
   
   // Hide unnecessary buttons
   dialogSurvey.style.display = "none";
