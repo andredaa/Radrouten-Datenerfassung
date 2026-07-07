@@ -90,10 +90,20 @@ rsync -avz --progress "${MIGRATION_DIR}.tar.gz" user@destination-server:/path/to
 
 #### 1. Setup Project
 
+**⚠️ Important:** If you already have an existing installation, save your Formbricks secrets BEFORE pulling from git:
+
 ```bash
-# Clone repository or copy project files
+# Extract and save existing Formbricks secrets (if updating existing installation)
+grep -A 3 "NEXTAUTH_SECRET\|ENCRYPTION_KEY\|CRON_SECRET" docker-compose.yml > formbricks-secrets-backup.txt
+```
+
+```bash
+# Clone repository or copy project files (for new installation)
 git clone <repository-url> kartierung_software_server
 cd kartierung_software_server
+
+# OR pull latest changes (for existing installation)
+git pull
 
 # Extract migration package
 tar -xzf ../migration_YYYYMMDD_HHMMSS.tar.gz
@@ -105,8 +115,17 @@ cd migration_YYYYMMDD_HHMMSS
 ```bash
 # Copy configuration files
 cp .env ../.env
-cp docker-compose.yml ../docker-compose.yml  # Review and merge if needed
 cp nginx.conf ../nginx.conf  # if customized
+
+# For docker-compose.yml: merge carefully to preserve Formbricks secrets
+# Option 1: Copy from migration package (preserves all secrets)
+cp docker-compose.yml ../docker-compose.yml
+
+# Option 2: If git pull changed docker-compose.yml, restore secrets manually
+# Compare and merge, then restore the three secret values from formbricks-secrets-backup.txt:
+#   - NEXTAUTH_SECRET
+#   - ENCRYPTION_KEY  
+#   - CRON_SECRET
 
 # Restore SSL certificates (if applicable)
 tar -xzf certbot-data.tar.gz -C ../
