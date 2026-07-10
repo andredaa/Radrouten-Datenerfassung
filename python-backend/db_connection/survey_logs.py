@@ -120,7 +120,7 @@ def create_survey_log(
     invalidate_previous_entries(
         user,
         route_id,
-        route_direction, 
+        route_direction,
         segment_id,
         force_deleting_all_matching_entries=True
     )
@@ -224,4 +224,47 @@ def get_finished_segments_from_db(route_id: int = None, route_direction: str = N
         # Return list of segment_id values
         segment_list = [row[0] for row in result]
         return segment_list
+    
+
+def get_newest_survey_activity(user: str, segment_id: str) -> dict:
+    """
+    Get valid and completed (TODO) segments
+    TODO get completed only!
+    """
+    print(f"getting details of newest survey activity from db {user} segment: {segment_id}")
+    engine = get_engine()
+
+    # Build dynamic WHERE clause based on provided filters
+    conditions = ["invalid_entry = FALSE"]
+    params = {}
+
+    conditions.append("user_name = :user")
+    params["user"] = user
+
+    conditions.append("segment_id = :segment_id")
+    params["segment_id"] = segment_id
+
+    where_clause = " AND ".join(conditions)
+    
+    query = text(f"""
+        SELECT segment_id, formbricks_response_id, user_name, route_id, route_direction, created_at
+        FROM survey_logs
+        WHERE {where_clause}
+        ORDER BY created_at DESC
+        LIMIT 1
+    """)
+
+    with engine.connect() as conn:
+        result = conn.execute(query, params)
+        row = result.fetchone()
+        if row is None:
+            return None
+        return {
+            "segment_id": row[0],
+            "response_id": row[1],
+            "user_name": row[2],
+            "route_id": row[3],
+            "route_direction": row[4],
+            "timestamp": row[5]
+        }
     

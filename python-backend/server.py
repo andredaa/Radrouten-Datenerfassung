@@ -8,7 +8,6 @@ import geopandas as gpd
 import uvicorn
 from fastapi import Body, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
 from geojson_pydantic import FeatureCollection
 from pydantic import BaseModel, ConfigDict
 
@@ -20,6 +19,7 @@ from db_connection.survey_logs import (
     invalidate_previous_entries,
 )
 from db_connection.write_to_db import write_gdf_to_db
+from formbricks_connection.response_details import get_response_details_from_formbricks
 
 ENV = os.getenv("ENV", "development")  # "production" or "development"
 
@@ -113,6 +113,20 @@ async def get_finished_segments(
     ),
 ) -> list[str]:
     return get_finished_segments_from_db(route_id, direction, user)
+
+
+@app.get("/get_response_details")
+async def get_response_details(
+    user: str = Query(
+        None,
+        description=("team member"),
+    ),
+    segment_id: str = Query(None, description="segment id")
+) -> dict:
+    try:
+        return get_response_details_from_formbricks(user, segment_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e)) from e
 
 
 class SurveyActivity(BaseModel):
