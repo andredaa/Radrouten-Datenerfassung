@@ -3,6 +3,16 @@ import { state, updateState } from './state.js';
 import { updateCompletedSurveysLayer } from './routes.js';
 import { stopwatch } from './stopwatch.js';
 
+const SURVEY_META_KEYS = new Set(["user", "segment_id", "geometry_wkb", "response_id_backend"]);
+
+function preparePrefilledAnswers(answers) {
+  return Object.fromEntries(
+    Object.entries(answers)
+      .filter(([key]) => !SURVEY_META_KEYS.has(key))  // avoid setting the old reponse_id_backend or duplicate params
+      .map(([key, value]) => [key, Array.isArray(value) ? value.join(",") : value]) // format array answers
+  );
+}
+
 // Track survey activity
 export async function trackSurveyActivity(user, segmentId, actionType) {
   const url = `${backendUrl}/track_survey_activity`;
@@ -37,10 +47,37 @@ export async function trackSurveyActivity(user, segmentId, actionType) {
   }
 }
 
+export async function getResponseDetails(user, segmentId) {
+  const url = new URL(`${backendUrl}/get_response_details`);
+  url.searchParams.set("user", user);
+  url.searchParams.set("segment_id", segmentId);
+
+  try {
+    const response = await fetch(url.toString(), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    
+    if (!response.ok) {
+      console.error("Fetching Survey response details from backend failed: ", response.status);
+      return false;
+    }
+
+    return await response.json()
+  } catch (e) {
+    console.error("could not fetch survey response details", e);
+    return null;
+  }
+
+}
+
 // Handle feature click
 export function handleFeatureClick(e) {
   const dialogMessage = document.getElementById("dialogMessage");
   const dialogRemove = document.getElementById("dialogRemove");
+  const dialogEditResponse = document.getElementById("dialogEditResponse");
   const dialogSurvey = document.getElementById("dialogSurvey");
   const confirmDialog = document.getElementById("confirmDialog");
 
@@ -52,10 +89,12 @@ export function handleFeatureClick(e) {
     if (isCompleted) {
       dialogMessage.textContent = `Du hast Segment ${segmentId} bereits kartiert - möchtest du die Kartierung löschen? `;
       dialogRemove.style.display = "block";
+      dialogEditResponse.style.display = "block";
       dialogSurvey.style.display = "none";
     } else {
       dialogMessage.textContent = `Segment ${segmentId} kartieren ?`;
       dialogRemove.style.display = "none";
+      dialogEditResponse.style.display = "none";
       dialogSurvey.style.display = "block";
     }
     
@@ -64,7 +103,7 @@ export function handleFeatureClick(e) {
 }
 
 // Open survey modal
-export function openSurveyModal(segmentId, geometryWkb, user, responseIdBackend) {
+export function openSurveyModal(segmentId, geometryWkb, user, responseIdBackend, predefinedAnswers={}) {
   const surveyIframe = document.getElementById("surveyIframe");
   const modalTitle = document.getElementById("modalTitle");
   const surveyModal = document.getElementById("surveyModal");
@@ -72,16 +111,27 @@ export function openSurveyModal(segmentId, geometryWkb, user, responseIdBackend)
 
   console.log("response id survey", responseIdBackend)
 
-  if (surveyUrl) {
-    const url = new URL(surveyUrl);
-    url.searchParams.set("user", user);
-    url.searchParams.set("segment_id", segmentId);
-    url.searchParams.set("geometry_wkb", geometryWkb);
-    url.searchParams.set("response_id_backend", responseIdBackend)
-    url.searchParams.set("9e90a2e8151f4943b79b4723", "2670e59186274c25adfed9f2");
-    surveyIframe.src = url.toString();
+  if (!surveyUrl) {
+    console.error("Survey url missing");
+    return
   }
-  modalTitle.textContent = `Survey - Segment ${segmentId}`;
+
+  // construct the url with preset params
+  const url = new URL(surveyUrl);
+  url.searchParams.set("user", user);
+  url.searchParams.set("segment_id", segmentId);
+  url.searchParams.set("geometry_wkb", geometryWkb);
+  url.searchParams.set("response_id_backend", responseIdBackend)
+  url.searchParams.set("9e90a2e8151f4943b79b4723", "2670e59186274c25adfed9f2");
+
+  Object.entries(preparePrefilledAnswers(predefinedAnswers)).forEach(([key, value]) => {
+    url.searchParams.set(key, value);
+  });
+  surveyIframe.src = url.toString();
+  
+  modalTitle.textContent = Object.keys(predefinedAnswers).length
+    ? `Survey - Segment ${segmentId} (UPDATE)`
+    : `Survey - Segment ${segmentId}`;
   surveyModal.classList.add("show");
   confirmDialog.classList.remove("show");
   
@@ -100,12 +150,11 @@ export function closeSurveyModal() {
 
   surveyModal.classList.remove("show");
 
-  // Mark as completed if survey was opened
+  // Show as completed if survey was opened
   if (state.selectedFeature && state.selectedFeature.properties.segment_id) {
     const segmentId = state.selectedFeature.properties.segment_id;
     state.completedSurveys.add(segmentId);
     updateCompletedSurveysLayer();
-    trackSurveyActivity(state.selectedUser, segmentId, "stop");
   }
   
   // Clear highlight

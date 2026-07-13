@@ -3,7 +3,7 @@ import { state, updateState } from './state.js';
 import { switchMapStyle } from './map.js';
 import { loadRadroute, getCompletedSurveys } from './routes.js';
 import { loadRadrouteStatus } from './allRoutesStatus.js';
-import { openSurveyModal, closeSurveyModal, closeDialog, trackSurveyActivity } from './survey.js';
+import { openSurveyModal, closeSurveyModal, closeDialog, trackSurveyActivity, getResponseDetails } from './survey.js';
 import { updateCompletedSurveysLayer } from './routes.js';
 
 
@@ -95,6 +95,7 @@ export function setupEventListeners() {
   const dialogCancel = document.getElementById("dialogCancel");
   const dialogSurvey = document.getElementById("dialogSurvey");
   const dialogRemove = document.getElementById("dialogRemove");
+  const dialogEditResponse = document.getElementById("dialogEditResponse");
   const styleBtns = document.querySelectorAll(".style-btn");
 
   // Menu toggle
@@ -153,20 +154,36 @@ export function setupEventListeners() {
     });
   });
 
+ async function flagFeatureAsDeleted(segmentId) { 
+    await trackSurveyActivity(state.selectedUser, segmentId, "delete").then((success) => {
+          if (success) {
+            state.completedSurveys.delete(segmentId);
+            updateCompletedSurveysLayer();
+          } else {
+            alert("Failed to delete survey entry. It may be older than 20 minutes.");
+          }
+        });
+  }
+
+  function checkSameFeature(currentProps, formbricksResponseDetails) {
+    if (
+      (currentProps["geometry_wkb"] == formbricksResponseDetails["geometry_wkb"])
+      && (currentProps["segment_id"] == formbricksResponseDetails["segment_id"])
+      && (state.selectedUser == formbricksResponseDetails["user"])
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
   // Dialog buttons
   dialogCancel.addEventListener("click", closeDialog);
   
   dialogRemove.addEventListener("click", () => {
     if (state.selectedFeature && state.selectedFeature.properties.segment_id) {
       const segmentId = state.selectedFeature.properties.segment_id;
-      trackSurveyActivity(state.selectedUser, segmentId, "delete").then((success) => {
-        if (success) {
-          state.completedSurveys.delete(segmentId);
-          updateCompletedSurveysLayer();
-        } else {
-          alert("Failed to delete survey entry. It may be older than 20 minutes.");
-        }
-      });
+      flagFeatureAsDeleted(segmentId);
       closeDialog();
     }
   });
@@ -180,25 +197,46 @@ export function setupEventListeners() {
       });
     }
   });
-
-  /**
-  dialogEditResponse.addEventListener("click", () => {
+  
+  dialogEditResponse.addEventListener("click", async () => {
     if (state.selectedFeature && state.selectedFeature.properties.segment_id) {
       const segmentId = state.selectedFeature.properties.segment_id;
 
-      /*
-      new backend route: get response details for segment_id and user!
-        -> filter survey logs from db, get newest response_id_backend for segment id 
-        -> get the last responses, for response_id_backend
-        -> if responses, invalidate in logs
-        -> return json with all response params
-        -> 
+      const formbricksResponseDetails = await getResponseDetails(state.selectedUser, segmentId);
 
-      new frontend logic:
-        - do survey as normal, just pass the prefilled answers as new param to the openSurveyModal function.
-        - open formbricks survey for segment, include all entries from backend's response json as url params (prefilled)
+      if (formbricksResponseDetails === null) {
+        alert("Kann nicht editiert werden.");
+        return
+      }
+      
+      if (!checkSameFeature(state.selectedFeature.properties, formbricksResponseDetails)) {
+        console.error("Features of selected and logged feature do not match. Do not edit");
+        alert("Kann nicht editiert werden.");
+        return;
+      }
 
-      /**
+      // create a new formbricks survey response with prefilled answers
+      trackSurveyActivity(state.selectedUser, segmentId, "start").then((trackResponse) => {
+        // open modal with prefilled answers
+        openSurveyModal(
+          segmentId,
+          formbricksResponseDetails["geometry_wkb"],
+          state.selectedUser,
+          trackResponse["response_id"],
+          formbricksResponseDetails);
+      });
+
+      closeDialog();
+    }
+  });
+
+
+
+  /**
+   *  weiteres feature: bautstelle. siehe oben.
+   * 
+   * 
+   * 
        * weiteres feature:
        * wenn selected feature len(fids) == 1 ,  like oberfläche, breite etc are the same (new backend query)
        *  -> get response details of prev. feature (segment_id -1) 
@@ -213,21 +251,7 @@ export function setupEventListeners() {
           radweg_art: same
           zweirichtung: same
        * 
-
-
-      trackSurveyActivity(state.selectedUser, segmentId, "delete").then((success) => {
-        if (success) {
-          state.completedSurveys.delete(segmentId);
-          updateCompletedSurveysLayer();
-        } else {
-          alert("Failed to delete survey entry. It may be older than 20 minutes.");
-        }
-      });
-      closeDialog();
-    }
-  });
-
-  */
+  **/
 
   // Close dialog on overlay click
   confirmDialog.addEventListener("click", (e) => {

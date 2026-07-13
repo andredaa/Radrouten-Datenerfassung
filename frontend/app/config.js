@@ -14,7 +14,8 @@ export const users = [
   "Line",
   "Rosa",
   "Christoph",
-  "Thomas"
+  "Thomas",
+  "Tester"
 ];
 
 export const directionMapping = {

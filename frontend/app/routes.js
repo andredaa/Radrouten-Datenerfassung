@@ -71,7 +71,7 @@ export async function loadRadroute() {
       type: "line",
       source: "radroute-source",
       paint: {
-        "line-color": "#e00f93",
+        "line-color": "#000000",
         "line-width": 4,
         "line-opacity": 1,
       },
