@@ -1,8 +1,8 @@
 x-formbricks-environment: &formbricks-environment
   environment:
     # Formbricks Configuration
-    WEBAPP_URL: http://localhost
-    NEXTAUTH_URL: http://localhost
+    WEBAPP_URL: http://localhost:3000
+    NEXTAUTH_URL: http://localhost:3000
     DATABASE_URL: "postgresql://postgres:postgres@formbricks-postgres:5432/formbricks?schema=public"
     NEXTAUTH_SECRET: 6f1415771c13a26c7808fefb28167812d6e50ed4fc683bc67c171a8a3cd7c5c4
     ENCRYPTION_KEY: 6f1415771c13a26c7808fefb28167812d6e50ed4fc683bc67c171a8a3cd7c5c4
@@ -35,19 +35,22 @@ services:
 
   backend:
     build:
-      dockerfile: python-backend/Dockerfile
+      dockerfile: python-backend/Dockerfile.local-dev
     container_name: bac-kartierung-backend
     depends_on:
       db:
         condition: service_healthy
     ports:
       - 5000:5000
+    volumes:
+      - ./python-backend:/opt/api-gis
     environment:
       POSTGIS_USER: postgres
       POSTGIS_PASSWORD: 123456
       POSTGIS_DB: BAC
-      DB_HOST: db
+      DB_HOST: bac-karierung-db
       DB_PORT: 5432 # Ensure backend connects to the internal DB port
+      FORMBRICKS_API_KEY: ${FORMBRICKS_API_KEY}
 
     restart: always
     networks:
@@ -55,7 +58,7 @@ services:
 
   frontend:
     build:
-      dockerfile: frontend/Dockerfile
+      dockerfile: frontend/Dockerfile.local-dev
     container_name: kartierung-frontend
     depends_on:
       - backend
@@ -64,6 +67,8 @@ services:
     restart: always
     networks:
       - bac_kartierung_net
+    volumes:
+    - ./frontend/app:/app
 
   # Formbricks Services
   formbricks-postgres:
@@ -109,7 +114,7 @@ services:
       redis:
         condition: service_healthy
     ports:
-      - 80:80
+      - 3000:3000
     volumes:
       - ./formbricks-quickstart/saml-connection:/home/nextjs/apps/web/saml-connection
     networks:

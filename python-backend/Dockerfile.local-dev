@@ -1,0 +1,18 @@
+FROM python:3.13
+
+WORKDIR /opt/api-gis
+
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
+ADD https://astral.sh/uv/install.sh /install.sh
+RUN sh /install.sh && mv /root/.local/bin/uv /usr/local/bin/uv && mv /root/.local/bin/uvx /usr/local/bin/uvx
+
+ENV UV_SYSTEM_PYTHON=1
+ENV PYTHONUNBUFFERED=1
+ENV ENV=development
+
+COPY python-backend/pyproject.toml python-backend/uv.lock* ./
+
+RUN uv pip install --no-cache -r pyproject.toml
+
+CMD ["uvicorn", "server:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "5000", "--reload", "--reload-dir", "/opt/api-gis", "--log-level", "debug"]
