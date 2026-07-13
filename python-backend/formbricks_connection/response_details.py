@@ -1,13 +1,15 @@
 import os
 import requests
-
+from fastapi import HTTPException
 from db_connection.survey_logs import get_newest_survey_activity
 
-FORMBRICKS_API_KEY = os.getenv("FORMBRICKS_API_KEY", "")
+FORMBRICKS_API_KEY = os.getenv("FORMBRICKS_API_KEY", "no_api_key_found")
+
+print("FORMBRICKS API KEY LOADED ? ", FORMBRICKS_API_KEY != "no_api_key_found")
 
 def get_last_responses_from_formbricks(response_count: int = 100):
     headers = {
-            'x-api-key': FORMBRICKS_API_KEY,
+            'x-api-key': FORMBRICKS_API_KEY
     }
 
     params = {
@@ -16,10 +18,16 @@ def get_last_responses_from_formbricks(response_count: int = 100):
         'order': 'desc',
     }
     response = requests.get(
-        'http://formbricks/api/v2/management/responses',
+        'http://formbricks:3000/api/v2/management/responses',
         params=params,
         headers=headers
     )
+
+    if response.status_code != 200:
+        raise HTTPException(
+            500,
+            "Could not connect to Formbricks"
+        )
 
     return response.json()
 
