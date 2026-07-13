@@ -163,7 +163,19 @@ export function setupEventListeners() {
             alert("Failed to delete survey entry. It may be older than 20 minutes.");
           }
         });
+  }
+
+  function checkSameFeature(currentProps, formbricksResponseDetails) {
+    if (
+      (currentProps["geometry_wkb"] == formbricksResponseDetails["geometry_wkb"])
+      && (currentProps["segment_id"] == formbricksResponseDetails["segment_id"])
+      && (state.selectedUser == formbricksResponseDetails["user"])
+    ) {
+      return true;
     }
+
+    return false;
+  }
 
   // Dialog buttons
   dialogCancel.addEventListener("click", closeDialog);
@@ -185,18 +197,6 @@ export function setupEventListeners() {
       });
     }
   });
-
-  function checkSameFeature(currentProps, formbricksResponseDetails) {
-    if (
-      (currentProps["geometry_wkb"] == formbricksResponseDetails["geometry_wkb"])
-      && (currentProps["segment_id"] == formbricksResponseDetails["segment_id"])
-      && (state.selectedUser == formbricksResponseDetails["user"])
-    ) {
-      return true;
-    }
-
-    return false;
-  }
   
   dialogEditResponse.addEventListener("click", async () => {
     if (state.selectedFeature && state.selectedFeature.properties.segment_id) {
@@ -209,8 +209,6 @@ export function setupEventListeners() {
         return
       }
       
-      // invalidate old response
-      await flagFeatureAsDeleted(segmentId);
       if (!checkSameFeature(state.selectedFeature.properties, formbricksResponseDetails)) {
         console.error("Features of selected and logged feature do not match. Do not edit");
         alert("Kann nicht editiert werden.");
@@ -219,6 +217,7 @@ export function setupEventListeners() {
 
       // create a new formbricks survey response with prefilled answers
       trackSurveyActivity(state.selectedUser, segmentId, "start").then((trackResponse) => {
+        // open modal with prefilled answers
         openSurveyModal(
           segmentId,
           formbricksResponseDetails["geometry_wkb"],
