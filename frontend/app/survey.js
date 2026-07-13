@@ -150,12 +150,11 @@ export function closeSurveyModal() {
 
   surveyModal.classList.remove("show");
 
-  // Mark as completed if survey was opened
+  // Show as completed if survey was opened
   if (state.selectedFeature && state.selectedFeature.properties.segment_id) {
     const segmentId = state.selectedFeature.properties.segment_id;
     state.completedSurveys.add(segmentId);
     updateCompletedSurveysLayer();
-    trackSurveyActivity(state.selectedUser, segmentId, "stop");
   }
   
   // Clear highlight
