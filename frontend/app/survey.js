@@ -91,11 +91,13 @@ export function handleFeatureClick(e) {
       dialogRemove.style.display = "block";
       dialogEditResponse.style.display = "block";
       dialogSurvey.style.display = "none";
+      dialogConstructionSite.style.display = "none";
     } else {
       dialogMessage.textContent = `Segment ${segmentId} kartieren ?`;
       dialogRemove.style.display = "none";
       dialogEditResponse.style.display = "none";
       dialogSurvey.style.display = "block";
+      dialogConstructionSite.style.display = "block";
     }
     
     confirmDialog.classList.add("show");
