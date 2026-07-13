@@ -6,37 +6,6 @@ import { loadRadrouteStatus } from './allRoutesStatus.js';
 import { openSurveyModal, closeSurveyModal, closeDialog, trackSurveyActivity, getResponseDetails } from './survey.js';
 import { updateCompletedSurveysLayer } from './routes.js';
 
-
-/**
- * neues feature: 
- * gesamter Abschnitt Baustelle (button)
- *  - ruft survey modal auf , passed params wo antworten auf "nicht kartierbar, baustelle steheh"
- *             "data": {
-                "1120ba29a30c4c069ba0c84d": "mit vereinzelten Unebenheiten (≤1 cm)",  <<----- 
-                "1e352551fbb74b2e8bea193e": "Baustelle ",
-                "3ff931faea514fcca598d295": "Keine Kartierung möglich",
-                "54b16f6d1b35465eaa70bbc4": "Keine Kartierung möglich",
-                "65d24eef91174451bd133729": [
-                    "Baustelle"
-                ],
-                "74b5a5db51fa4913a6a9f3bf": "Keine Kartierung möglich",
-                "83075783322f4c4381b41672": "Keine Kartierung möglich",
-                "8387cd6e0069425f8e4d7cc9": "Baustelle ",
-                "8600cace891146338ca28228": "Keine Kartierung möglich",
-                "8635f3e71d4e47289ca2fb3c": "Keine Kartierung möglich",
-                "9334d492d6f843609a78fd86": "Baustelle ",
-                "9e90a2e8151f4943b79b4723": "ja",
-                "a62uq5ixf4eobdfjb0iefw4o": "Baustelle ",
-                "b828590cdbb44ef19a9cd85f": "Baustelle ",
-                "e922b34126c94acb982e3c57": "Baustelle ",
-                "f4ede6869518490793d7c592": "Baustelle ",
-                "gtsxi76o6gtdxhdycu18e18z": "Baustelle ",
-                "k6pjlstjuoentr9ep1wt7lrm": "Keine Kartierung möglich",
-                "nf4q43gxbaczcto7s429kjyl": "Keine Kartierung möglich"
-            },
- */
-
-
 // Populate user select dropdown
 export function populateUserSelect() {
   const userSelect = document.getElementById("userSelect");
@@ -96,6 +65,7 @@ export function setupEventListeners() {
   const dialogSurvey = document.getElementById("dialogSurvey");
   const dialogRemove = document.getElementById("dialogRemove");
   const dialogEditResponse = document.getElementById("dialogEditResponse");
+  const dialogConstructionSite = document.getElementById("dialogConstructionSite");
   const styleBtns = document.querySelectorAll(".style-btn");
 
   // Menu toggle
@@ -194,6 +164,41 @@ export function setupEventListeners() {
       const geometryWkb = state.selectedFeature.properties.geometry_wkb;
       trackSurveyActivity(state.selectedUser, segmentId, "start").then((trackResponse) => {
         openSurveyModal(segmentId, geometryWkb, state.selectedUser, trackResponse["response_id"]);
+      });
+    }
+  });
+
+  dialogConstructionSite.addEventListener("click", async() => {
+    if (state.selectedFeature) {
+      const segmentId = state.selectedFeature.properties.segment_id;
+      const geometryWkb = state.selectedFeature.properties.geometry_wkb;
+      trackSurveyActivity(state.selectedUser, segmentId, "start").then((trackResponse) => {
+        openSurveyModal(
+          segmentId,
+          geometryWkb,
+          state.selectedUser,
+          trackResponse["response_id"],
+          {
+            "9e90a2e8151f4943b79b4723": "ja",
+            "1e352551fbb74b2e8bea193e": "Baustelle ",
+            "3ff931faea514fcca598d295": "Keine Kartierung möglich",
+            "54b16f6d1b35465eaa70bbc4": "Keine Kartierung möglich",
+            "65d24eef91174451bd133729": "Baustelle",
+            "74b5a5db51fa4913a6a9f3bf": "Keine Kartierung möglich",
+            "83075783322f4c4381b41672": "Keine Kartierung möglich",
+            "8387cd6e0069425f8e4d7cc9": "Baustelle ",
+            "8600cace891146338ca28228": "Keine Kartierung möglich",
+            "8635f3e71d4e47289ca2fb3c": "Keine Kartierung möglich",
+            "9334d492d6f843609a78fd86": "Baustelle",
+            "a62uq5ixf4eobdfjb0iefw4o": "Baustelle",
+            "b828590cdbb44ef19a9cd85f": "Baustelle",
+            "e922b34126c94acb982e3c57": "Baustelle",
+            "f4ede6869518490793d7c592": "Baustelle",
+            "gtsxi76o6gtdxhdycu18e18z": "Baustelle",
+            "k6pjlstjuoentr9ep1wt7lrm": "Keine Kartierung möglich",
+            "nf4q43gxbaczcto7s429kjyl": "Keine Kartierung möglich"
+          }
+        );
       });
     }
   });
