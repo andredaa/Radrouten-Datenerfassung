@@ -50,6 +50,7 @@ services:
       POSTGIS_DB: BAC
       DB_HOST: bac-karierung-db
       DB_PORT: 5432 # Ensure backend connects to the internal DB port
+      FORMBRICKS_API_KEY: ${FORMBRICKS_API_KEY}
 
     restart: always
     networks:
@@ -57,7 +58,7 @@ services:
 
   frontend:
     build:
-      dockerfile: frontend/Dockerfile
+      dockerfile: frontend/Dockerfile.local-dev
     container_name: kartierung-frontend
     depends_on:
       - backend
