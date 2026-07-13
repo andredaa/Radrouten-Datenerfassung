@@ -65,6 +65,7 @@ services:
       POSTGIS_DB: ${POSTGIS_DB}
       DB_HOST: ${DB_HOST}
       DB_PORT: 5432 # Ensure backend connects to the internal DB port
+      FORMBRICKS_API_KEY: ${FORMBRICKS_API_KEY}
 
     restart: always
     networks:
