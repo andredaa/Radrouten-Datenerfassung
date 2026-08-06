@@ -28,6 +28,7 @@ export const directionMapping = {
   7: ["Nordost", "Südwest"],
   8: ["Nordwest", "Südost"],
   9: ["Nordwest", "Südost"],
+  10: ["Ost", "West"],
   11: ["Nord", "Süd"],
   12: ["Nord", "Süd"],
   13: ["Nordwest", "Südost"],
