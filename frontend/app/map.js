@@ -69,6 +69,11 @@ export function switchMapStyle(style) {
       initLocationsLayer();
     } else if (state.use == "bike-shops") {
       initBikeShopsLayer();
+    } else if (state.use == "radnetz") {
+      // Dynamic import to avoid a circular import with the radnetz UI module
+      import('./radnetz/ui_radnetz_segmentation.js').then(({ initSegmentation }) => {
+        initSegmentation();
+      });
     } else {
       loadRadroute();
     }

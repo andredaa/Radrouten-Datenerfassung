@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radnetz Segmentierung</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.0.0/dist/maplibre-gl.css">
+  <script src="https://unpkg.com/maplibre-gl@4.0.0/dist/maplibre-gl.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    #map {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+    }
+
+    #map canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    /* Style switcher */
+    .style-switcher {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 50;
+    }
+
+    .style-btn {
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .style-btn.active {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .style-btn:hover:not(.active) {
+      background: #e5e7eb;
+    }
+
+    /* segmentation Panel */
+    .segmentation-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .segmentation-panel.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .segmentation-content {
+      background: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      max-width: 500px;
+      width: 90vw;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .segmentation-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #1f2937;
+    }
+
+    .segmentation-properties {
+      margin-bottom: 1.5rem;
+    }
+
+    .property-row {
+      display: flex;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .property-row:last-child {
+      border-bottom: none;
+    }
+
+    .property-key {
+      font-weight: 600;
+      color: #374151;
+      min-width: 150px;
+      flex-shrink: 0;
+    }
+
+    .property-value {
+      color: #4b5563;
+      word-break: break-word;
+    }
+
+    .segmentation-buttons {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+
+    .segmentation-btn {
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.375rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.2s;
+      background: #3b82f6;
+      color: white;
+    }
+
+    .segmentation-btn:hover {
+      background: #2563eb;
+    }
+
+    .segmentation-btn.start-btn {
+      background: #22c55e;
+    }
+
+    .segmentation-btn.start-btn:hover {
+      background: #16a34a;
+    }
+
+    .segmentation-btn.end-btn {
+      background: #f97316;
+    }
+
+    .segmentation-btn.end-btn:hover {
+      background: #ea580c;
+    }
+
+    .segmentation-btn.add-btn {
+      background: #eab308;
+    }
+
+    .segmentation-btn.add-btn:hover {
+      background: #ca8a04;
+    }
+
+    .segmentation-btn.close-btn {
+      background: #6b7280;
+    }
+
+    .segmentation-btn.close-btn:hover {
+      background: #4b5563;
+    }
+
+    /* Segment status panel */
+    .segment-status-panel {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      background: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      padding: 0.75rem 1rem;
+      z-index: 50;
+      min-width: 220px;
+    }
+
+    .segment-status-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #1f2937;
+    }
+
+    .segment-status-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: #374151;
+      margin-bottom: 0.25rem;
+    }
+
+    .segment-status-row .segment-status-value.start {
+      color: #16a34a;
+      font-weight: 600;
+    }
+
+    .segment-status-row .segment-status-value.end {
+      color: #ea580c;
+      font-weight: 600;
+    }
+
+    .segment-status-buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .segment-status-buttons button {
+      flex: 1;
+      padding: 0.4rem 0.5rem;
+      border-radius: 0.375rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.8125rem;
+    }
+
+    #saveSegmentBtn {
+      background: #3b82f6;
+      color: white;
+    }
+
+    #saveSegmentBtn:hover:not(:disabled) {
+      background: #2563eb;
+    }
+
+    #saveSegmentBtn:disabled {
+      background: #d1d5db;
+      cursor: not-allowed;
+    }
+
+    #clearSegmentBtn {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    #clearSegmentBtn:hover {
+      background: #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+  <!-- Map container -->
+  <div id="map"></div>
+
+  <!-- Style switcher -->
+  <div class="style-switcher">
+    <button class="style-btn active" data-style="light">Light</button>
+    <button class="style-btn" data-style="dark">Dark</button>
+    <button class="style-btn" data-style="osm">OSM</button>
+    <button class="style-btn" data-style="satellite">Satellite</button>
+  </div>
+
+  <!-- segmentation Panel -->
+  <div class="segmentation-panel" id="segmentationDialog">
+    <div class="segmentation-content" onclick="event.stopPropagation()">
+      <div class="segmentation-title">Segmentierung</div>
+      <div class="segmentation-properties" id="segmentationProperties">
+        <!-- Properties will be populated by JavaScript -->
+      </div>
+      <div class="segmentation-buttons">
+        <button class="segmentation-btn close-btn" id="closeSegmentation">Schließen</button>
+        <button class="segmentation-btn add-btn" id="addFeatureBtn">Hinzufügen (a)</button>
+        <button class="segmentation-btn start-btn" id="setStartBtn">Segment Start</button>
+        <button class="segmentation-btn end-btn" id="setEndBtn">Segment Ende</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Segment status panel: shows current selection and allows saving -->
+  <div class="segment-status-panel">
+    <div class="segment-status-title">Neues Segment</div>
+    <div class="segment-status-row">
+      <span>Start:</span>
+      <span class="segment-status-value start" id="segmentStartValue">-</span>
+    </div>
+    <div class="segment-status-row">
+      <span>Ende:</span>
+      <span class="segment-status-value end" id="segmentEndValue">-</span>
+    </div>
+    <div class="segment-status-row">
+      <span>Weitere Features:</span>
+      <span id="segmentFeaturesValue">0</span>
+    </div>
+    <div class="segment-status-buttons">
+      <button id="clearSegmentBtn">Zurücksetzen</button>
+      <button id="saveSegmentBtn" disabled>Segment speichern</button>
+    </div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

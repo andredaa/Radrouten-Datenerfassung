@@ -12,6 +12,11 @@ from geojson_pydantic import FeatureCollection
 from pydantic import BaseModel, ConfigDict
 
 from db_connection.get_from_postgis import geojson_from_db
+from db_connection.radnetz_segments import (
+    create_radnetz_segment,
+    ensure_radnetz_segments_table_exists,
+    get_radnetz_segmented_ids_from_db
+)
 from db_connection.survey_logs import (
     create_survey_log,
     ensure_survey_logs_table_exists,
@@ -41,8 +46,16 @@ async def lifespan(app: FastAPI):
     gdf = gpd.read_file(this_dir / "radrouten" / "all_routes_segmented.gpkg")
     gdf = gdf[gdf.geometry.is_valid]
     write_gdf_to_db(gdf, "radrouten") # type: ignore
+    
+    gdf = gpd.read_file(this_dir / "radnetz" / "radnetz_fertiggestellt_ohne_radrouten.gpkg", fid_as_index=True)
+    gdf = gdf[gdf.geometry.is_valid]
+    gdf["fid"] = gdf.index
+    gdf = gdf.set_crs("EPSG:25832", allow_override=True)
+    gdf = gdf.to_crs("EPSG:4326")
+    write_gdf_to_db(gdf, "radnetz") # type: ignore
 
     ensure_survey_logs_table_exists()
+    ensure_radnetz_segments_table_exists()
 
     print("Startup complete.")
 
@@ -223,6 +236,56 @@ async def track_survey_activity(
 
     TODO tests
     """
+
+
+class RadnetzSegment(BaseModel):
+    """Request model for saving a newly mapped radnetz segment."""
+
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "start": 12,
+                "end": 42,
+                "segment_ids": [12, 13, 14, 42],
+            }
+        }
+    )
+
+    start: int
+    end: int
+    segment_ids: list[int]
+
+
+@app.post("/new_radnetz_segment")
+async def new_radnetz_segment(
+    request: RadnetzSegment = Body(...),
+):
+    """Save a new radnetz segment.
+
+    Request body should be JSON with:
+    - start: fid of the segment's start feature
+    - end: fid of the segment's end feature
+    - segment_ids: fids of all features belonging to the segment (including start and end)
+    """
+    try:
+        segment_id = create_radnetz_segment(
+            request.start, request.end, request.segment_ids
+        )
+        return {"id": segment_id}
+    except Exception as e:
+        print(f"Error: {e}")
+        raise HTTPException(
+            500, f"Error saving radnetz segment: {e}"
+        ) from e
+
+
+
+@app.get("/get_radnetz_fids_segmented")
+async def get_radnetz_fids_segmented() -> list:
+    try:
+        return get_radnetz_segmented_ids_from_db()
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e)) from e
 
 
 if __name__ == "__main__":
