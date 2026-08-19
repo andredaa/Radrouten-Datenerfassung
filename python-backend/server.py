@@ -22,6 +22,7 @@ from db_connection.survey_logs import (
     ensure_survey_logs_table_exists,
     get_finished_segments_from_db,
     invalidate_previous_entries,
+    get_all_invalid_formbrick_response_ids
 )
 from db_connection.write_to_db import write_gdf_to_db
 from formbricks_connection.response_details import get_response_details_from_formbricks
@@ -126,6 +127,11 @@ async def get_finished_segments(
     ),
 ) -> list[str]:
     return get_finished_segments_from_db(route_id, direction, user)
+
+
+@app.get("/get_invalid_response_ids")
+async def get_invalid_response_ids() -> list:
+    return get_all_invalid_formbrick_response_ids()
 
 
 @app.get("/get_response_details")

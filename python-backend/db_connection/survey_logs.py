@@ -268,3 +268,24 @@ def get_newest_survey_activity(user: str, segment_id: str) -> dict:
             "timestamp": row[5]
         }
     
+
+def get_all_invalid_formbrick_response_ids() -> list[str]:
+    """
+    Get valid and completed (TODO) segments
+    TODO get completed only!
+    """
+    print("getting list of completed segments")
+    engine = get_engine()
+
+    query = text(f"""
+        SELECT formbricks_response_id 
+        FROM survey_logs
+        WHERE invalid_entry = TRUE
+    """)
+
+    with engine.connect() as conn:
+        result = conn.execute(query)
+        
+        # Return list of invalid response ids
+        invalid_response_id_list = [row[0] for row in result]
+        return invalid_response_id_list
