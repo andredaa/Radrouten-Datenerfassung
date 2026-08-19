@@ -7,13 +7,19 @@ FORMBRICKS_API_KEY = os.getenv("FORMBRICKS_API_KEY", "no_api_key_found")
 
 print("FORMBRICKS API KEY LOADED ? ", FORMBRICKS_API_KEY != "no_api_key_found")
 
-def get_last_responses_from_formbricks(response_count: int = 100):
+def get_last_responses_from_formbricks(response_count: int = 250, skip=0):
+
+    if response_count > 250:
+        raise ValueError("Response count max 250")
+
+
     headers = {
             'x-api-key': FORMBRICKS_API_KEY
     }
 
     params = {
         'limit': response_count,
+        'skip': skip,
         'sortBy': 'createdAt',
         'order': 'desc',
     }
