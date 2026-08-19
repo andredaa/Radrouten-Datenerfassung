@@ -99,6 +99,7 @@ export const backendUrl = urlParams.get('backendUrl') || 'https://bike-access-ch
 export const formbricksUrl = urlParams.get('formbricksUrl') || 'https://bike-access-check.uni-hamburg.de/formbricks';
 export const surveyId = urlParams.get('formbricksSurvey') || 'cmobkudkr000no601u3taqnu2';
 export const surveyUrl = `${formbricksUrl}/s/${surveyId}?embed=true`;
+export const highlightNeighborhood = urlParams.get("highlightNeighborhood") || null;
 
 console.log('Using backend URL:', backendUrl);
 console.log('Using survey URL:', surveyUrl);

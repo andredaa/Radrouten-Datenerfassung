@@ -1,6 +1,7 @@
 import { switchMapStyle } from '../map.js';
 import { state } from '../state.js';
-import { backendUrl } from '../config.js';
+import { backendUrl, highlightNeighborhood } from '../config.js';
+import { hamburgNeighborhoods } from './hamburgNeighborhoods.js';
 
 // Segmentation tool state (local to this page, not part of the shared app state)
 let segmentStart = null; // fid of the segment's start feature
@@ -309,6 +310,26 @@ export async function initSegmentation() {
   // add fids of previously processed features to the alreadyProcessed set
   const processedPreviously = await getRadnetzProcessed();
   processedPreviously.forEach((fid) => alreadyProcessedFids.add(fid));
+
+  if (highlightNeighborhood) {
+    // Add source and layer
+    state.map.addSource("hamburg-neighborhood-source", {
+      type: "geojson",
+      data: hamburgNeighborhoods,
+    });
+
+  // Base layer: alternating light/dark blue depending on fid parity
+  state.map.addLayer({
+    id: "hamburg-neighborhood",
+    type: "line",
+    source: "hamburg-neighborhood-source",
+    paint: {
+      "line-color": "#d85256",
+      "line-width": 4,
+    },
+    filter: ["==", ["get", "stadtteil_name"], highlightNeighborhood],
+  });
+  }
 
   // Add source and layer
   state.map.addSource("radnetz-source", {
