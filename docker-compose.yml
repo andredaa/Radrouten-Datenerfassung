@@ -19,6 +19,7 @@ services:
       # Only nginx exposes ports to host
       - "80:80"      
       - "443:443"
+    restart: always
     networks:
       - bac_kartierung_net
       - formbricks_net
