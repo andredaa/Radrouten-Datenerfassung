@@ -307,6 +307,10 @@ export async function initSegmentation() {
 
   const data = await getRadnetzLayer();
 
+  data.features.forEach((feature, index) => {
+    feature.properties.feature_index = index;
+  });
+
   // add fids of previously processed features to the alreadyProcessed set
   const processedPreviously = await getRadnetzProcessed();
   processedPreviously.forEach((fid) => alreadyProcessedFids.add(fid));
@@ -345,9 +349,14 @@ export async function initSegmentation() {
     paint: {
       "line-color": [
         "case",
-        ["==", ["%", ["to-number", ["get", "fid"]], 2], 0],
-        "#60a5fa", // even fid: light blue
-        "#1e3a8a"  // odd fid: dark blue
+        ["has", "feature_index"],
+        [
+          "case",
+          ["==", ["%", ["to-number", ["get", "feature_index"]], 2], 0],
+          "#60a5fa", // even: light blue
+          "#1e3a8a"  // odd: dark blue
+        ],
+        "#000000"  // fallback: black
       ],
       "line-width": 4,
     }
