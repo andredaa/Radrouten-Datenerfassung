@@ -341,6 +341,28 @@ export async function initSegmentation() {
     data,
   });
 
+  // Casing layer: inverted alternating color outline — even gets dark casing, odd gets light casing
+  // so adjacent features always have contrasting borders even where they touch
+  state.map.addLayer({
+    id: "radnetz-line-casing",
+    type: "line",
+    source: "radnetz-source",
+    paint: {
+      "line-color": [
+        "case",
+        ["has", "feature_index"],
+        [
+          "case",
+          ["==", ["%", ["to-number", ["get", "feature_index"]], 2], 0],
+          "#1e3a8a", // even: dark blue casing (opposite of fill)
+          "#60a5fa"  // odd: light blue casing (opposite of fill)
+        ],
+        "#ffffff"  // fallback
+      ],
+      "line-width": 7,
+    }
+  });
+
   // Base layer: alternating light/dark blue depending on fid parity
   state.map.addLayer({
     id: "radnetz-line",
@@ -413,6 +435,26 @@ export async function initSegmentation() {
   // Re-apply the current selection to the freshly (re)created highlight layers
   updateSegmentHighlightLayers();
   updateProcessedHighlightLayer();
+
+  // Label layer: show feature_index at the midpoint of each line
+  state.map.addLayer({
+    id: "radnetz-label",
+    type: "symbol",
+    source: "radnetz-source",
+    layout: {
+      "symbol-placement": "line-center",
+      "text-field": ["get", "feature_index"],
+      "text-size": 11,
+      "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
+      "text-allow-overlap": false,
+      "text-ignore-placement": false,
+    },
+    paint: {
+      "text-color": "#ffffff",
+      "text-halo-color": "#000000",
+      "text-halo-width": 1.5,
+    }
+  });
 
   // Add click handler for radnetz features
   state.map.on("click", "radnetz-line", (e) => {
