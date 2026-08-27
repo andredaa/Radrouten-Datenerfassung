@@ -45,16 +45,24 @@ async def lifespan(app: FastAPI):
 
     print("import radrouten to db")
     this_dir = Path(__file__).parent
+
+    # Radrouten to db
     gdf = gpd.read_file(this_dir / "radrouten" / "all_routes_segmented.gpkg")
     gdf = gdf[gdf.geometry.is_valid]
     write_gdf_to_db(gdf, "radrouten") # type: ignore
     
+    # Radnetz to db
     gdf = gpd.read_file(this_dir / "radnetz" / "radnetz_fertiggestellt_ohne_radrouten.gpkg", fid_as_index=True)
     gdf = gdf[gdf.geometry.is_valid]
     gdf["fid"] = gdf.index
     gdf = gdf.set_crs("EPSG:25832", allow_override=True)
     gdf = gdf.to_crs("EPSG:4326")
     write_gdf_to_db(gdf, "radnetz") # type: ignore
+    
+    # hamburg neighborhoods to db
+    gdf = gpd.read_file(this_dir / "hamburg_neighborhoods" / "hamburg_neighborhoods.geojson")
+    gdf = gdf[gdf.geometry.is_valid]
+    write_gdf_to_db(gdf, "hamburg_neighborhoods") # type: ignore
 
     ensure_survey_logs_table_exists()
     ensure_radnetz_segments_table_exists()
