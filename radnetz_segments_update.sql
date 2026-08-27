@@ -9,7 +9,7 @@ TRUNCATE TABLE radnetz_segments RESTART IDENTITY;
 INSERT INTO radnetz_segments (start_fid, end_fid, segment_ids) VALUES (80893, 42585, '[80893, 42585, 83712, 57278]'::jsonb);
 INSERT INTO radnetz_segments (start_fid, end_fid, segment_ids) VALUES (76606, 76611, '[76606, 76611, 61952, 46196]'::jsonb);
 INSERT INTO radnetz_segments (start_fid, end_fid, segment_ids) VALUES (76614, 76608, '[76614, 76608, 46199, 17743]'::jsonb);
-INSERT INTO radnetz_segments (start_fid, end_fid, segment_ids) VALUES (76609, 76616, '[76609, 18377, 60003, 76616, 57279, 63637, 45616]'::jsonb);
+INSERT INTO radnetz_segments (start_fid, end_fid, segment_ids) VALUES (76609, 76620, '[76609, 18377, 60003, 76616, 57279, 63637, 45616, 72862, 76620]'::jsonb);
 INSERT INTO radnetz_segments (start_fid, end_fid, segment_ids) VALUES (76619, 57286, '[76619, 57286]'::jsonb);
 INSERT INTO radnetz_segments (start_fid, end_fid, segment_ids) VALUES (57369, 76618, '[57369, 76618, 72864, 76615]'::jsonb);
 INSERT INTO radnetz_segments (start_fid, end_fid, segment_ids) VALUES (76617, 76610, '[76617, 76610, 56453, 18412]'::jsonb);
