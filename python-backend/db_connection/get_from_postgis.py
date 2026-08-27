@@ -5,7 +5,7 @@ import json
 import pandas as pd
 
 from geojson_pydantic import FeatureCollection
-from shapely import wkb
+from shapely import wkb, to_wkb
 
 from db_connection.load_engine import get_engine
 from db_connection.radnetz_segments import get_radnetz_segmented_ids_from_db,get_radnetz_segments_from_db
@@ -163,7 +163,7 @@ def geojson_from_db(
     return geojson
 
 
-def get_radnetz_clipped_by_neighborhood(stadtteil_name: str) -> FeatureCollection:
+def get_radnetz_clipped_by_neighborhood(stadtteil_name: str | None) -> FeatureCollection:
     """
     Fetches radnetz segments clipped to the geometry of the given Hamburg neighborhood.
 
@@ -176,35 +176,40 @@ def get_radnetz_clipped_by_neighborhood(stadtteil_name: str) -> FeatureCollectio
     neighborhood_geom_col = get_geometry_column_name("hamburg_neighborhoods")
     radnetz_geom_col = get_geometry_column_name("radnetz")
 
-    query = text(
-        f"""
-        SELECT jsonb_build_object(
-            'type', 'FeatureCollection',
-            'features', jsonb_agg(
-                jsonb_build_object(
-                    'type', 'Feature',
-                    'geometry', ST_AsGeoJSON(ST_Force2D(
-                        ST_Intersection(r.{radnetz_geom_col}, n.{neighborhood_geom_col})
-                    ))::jsonb,
-                    'properties', to_jsonb(r.*) - '{radnetz_geom_col}'
+    if stadtteil_name:
+        query = text(
+            f"""
+            SELECT jsonb_build_object(
+                'type', 'FeatureCollection',
+                'features', jsonb_agg(
+                    jsonb_build_object(
+                        'type', 'Feature',
+                        'geometry', ST_AsGeoJSON(ST_Force2D(
+                            ST_Intersection(r.{radnetz_geom_col}, n.{neighborhood_geom_col})
+                        ))::jsonb,
+                        'properties', to_jsonb(r.*) - '{radnetz_geom_col}'
+                    )
                 )
-            )
-        ) AS geojson
-        FROM radnetz r
-        JOIN hamburg_neighborhoods n
-          ON ST_Intersects(r.{radnetz_geom_col}, n.{neighborhood_geom_col})
-        WHERE n.stadtteil_name = :stadtteil_name
-          AND NOT ST_IsEmpty(ST_Intersection(r.{radnetz_geom_col}, n.{neighborhood_geom_col}))
-        """
-    )
+            ) AS geojson
+            FROM radnetz r
+            JOIN hamburg_neighborhoods n
+            ON ST_Intersects(r.{radnetz_geom_col}, n.{neighborhood_geom_col})
+            WHERE n.stadtteil_name = :stadtteil_name
+            AND NOT ST_IsEmpty(ST_Intersection(r.{radnetz_geom_col}, n.{neighborhood_geom_col}))
+            """
+        )
+        
+        engine = get_engine()
+        with engine.connect() as conn:
+            result = conn.execute(query, {"stadtteil_name": stadtteil_name})
+            geojson = result.scalar()
 
-    engine = get_engine()
-    with engine.connect() as conn:
-        result = conn.execute(query, {"stadtteil_name": stadtteil_name})
-        geojson = result.scalar()
-
-    if geojson is None or geojson.get("features") is None:
-        geojson = {"type": "FeatureCollection", "features": []}
+        if geojson is None or geojson.get("features") is None:
+            geojson = {"type": "FeatureCollection", "features": []}
+        
+    else:
+        # if no neighborhood is specified, fetch the entire radnetz table
+        geojson = geojson_from_db(table_name="radnetz")
 
     gdf = gpd.GeoDataFrame.from_features(geojson["features"])
 
@@ -215,16 +220,20 @@ def get_radnetz_clipped_by_neighborhood(stadtteil_name: str) -> FeatureCollectio
     segmented_features_props = []
 
     # create a new geojson with radnetz segments
-    for segment_dict in get_radnetz_segments_from_db():
-        if not any(fid in neighborhood_fids for fid in segment_dict["segments_ids"]):
-            continue
-        segment_id = f"{stadtteil_name}_{segment_dict['start_fid']}_{segment_dict['end_fid']}"
+    for segment_idx, segment_dict in enumerate(
+        s for s in get_radnetz_segments_from_db()
+        if any(fid in neighborhood_fids for fid in s["segments_ids"])
+    ):
         props = segment_dict.copy()
-        props["segment_id"] = segment_id
         props["segment_features_fids"] = props["segments_ids"]
+        segment_id = f"Radnetz_{segment_dict['start_fid']}_{segment_dict['end_fid']}"
+        geometry = gdf_segmented[gdf_segmented["fid"].isin(props["segment_features_fids"])].union_all()
+        segmented_features_geometries.append(geometry)
+        props["segment_idx"] = segment_idx
+        props["segment_id"] = segment_id
+        props["geometry_wkb"] = to_wkb(geometry, hex=True)
         del props["segments_ids"]
         segmented_features_props.append(props)
-        segmented_features_geometries.append(gdf_segmented[gdf_segmented["fid"].isin(props["segment_features_fids"])].union_all())
 
     return json.loads(
         gpd.GeoDataFrame(segmented_features_props, geometry=segmented_features_geometries).to_json()

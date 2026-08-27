@@ -125,7 +125,7 @@ async def get_layer(
 
 @app.get("/get_radnetz_by_neighborhood")
 async def get_radnetz_by_neighborhood(
-    stadtteil_name: str = Query(..., description="Name of the Hamburg Stadtteil, e.g. 'Altona-Altstadt'"),
+    stadtteil_name: str = Query(None, description="Name of the Hamburg Stadtteil, e.g. 'Altona-Altstadt'"),
 ) -> FeatureCollection:
     """Return radnetz segments clipped to the given Hamburg neighborhood (Stadtteil)."""
     try:
