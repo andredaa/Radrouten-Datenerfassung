@@ -9,7 +9,8 @@ export const state = {
   selectedLocationQuestionaire: null,
   isLoading: false,
   selectedFeature: null,
-  completedSurveys: new Set()
+  completedSurveys: new Set(),
+  selectedNeighborhood: ""
 };
 
 export function getState() {

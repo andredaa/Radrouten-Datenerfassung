@@ -1,10 +1,31 @@
-import { users, directionMapping } from './config.js';
+import { users, directionMapping, isRadnetzMode } from './config.js';
 import { state, updateState } from './state.js';
 import { switchMapStyle } from './map.js';
 import { loadRadroute, getCompletedSurveys } from './routes.js';
 import { loadRadrouteStatus } from './allRoutesStatus.js';
 import { openSurveyModal, closeSurveyModal, closeDialog, trackSurveyActivity, getResponseDetails } from './survey.js';
 import { updateCompletedSurveysLayer } from './routes.js';
+
+
+// neighborhoods for Radnetz kartierung
+const NEIGHBORHOODS = [
+  "Altona-Altstadt",
+  "Bergedorf",
+  "Dulsberg",
+  "HafenCity",
+  "Hamm",
+  "Harvestehude",
+  "Jenfeld",
+  "Marienthal",
+  "Neustadt",
+  "Niendorf",
+  "Osdorf",
+  "Rahlstedt",
+  "Rotherbaum",
+  "St. Pauli",
+  "Wandsbek",
+  "Wilhelmsburg",
+];
 
 // Populate user select dropdown
 export function populateUserSelect() {
@@ -17,6 +38,38 @@ export function populateUserSelect() {
     userSelect.appendChild(option);
   });
   userSelect.value = state.selectedUser;
+}
+
+// Populate neighborhood select dropdown
+export function populateNeighborhoodSelect() {
+  const neighborhoodSelect = document.getElementById("neighborhoodSelect");
+  neighborhoodSelect.innerHTML = "";
+  NEIGHBORHOODS.forEach(name => {
+    const option = document.createElement("option");
+    option.value = name;
+    option.textContent = name;
+    neighborhoodSelect.appendChild(option);
+  });
+  updateState({ selectedNeighborhood: NEIGHBORHOODS[0] });
+  neighborhoodSelect.value = NEIGHBORHOODS[0];
+}
+
+// Show/hide UI elements based on radnetz mode
+export function applyRadnetzMode() {
+  const routeGroup = document.getElementById("routeGroup");
+  const directionGroup = document.getElementById("directionGroup");
+  const neighborhoodGroup = document.getElementById("neighborhoodGroup");
+  const menuTitle = document.getElementById("menuTitle");
+  if (isRadnetzMode) {
+    routeGroup.style.display = "none";
+    directionGroup.style.display = "none";
+    neighborhoodGroup.style.display = "";
+    if (menuTitle) menuTitle.textContent = "Radnetz";
+  } else {
+    routeGroup.style.display = "";
+    directionGroup.style.display = "";
+    neighborhoodGroup.style.display = "none";
+  }
 }
 
 // Populate route select dropdown
@@ -55,6 +108,7 @@ export function setupEventListeners() {
   const userSelect = document.getElementById("userSelect");
   const routeSelect = document.getElementById("routeSelect");
   const directionSelect = document.getElementById("directionSelect");
+  const neighborhoodSelect = document.getElementById("neighborhoodSelect");
   const loadRouteBtn = document.getElementById("loadRouteBtn");
   const loadRouteStatusBtn = document.getElementById("loadRouteStatusBtn");
   const surveyModal = document.getElementById("surveyModal");
@@ -89,19 +143,31 @@ export function setupEventListeners() {
     updateState({ selectedDirection: e.target.value });
   });
 
+  // Neighborhood selection
+  neighborhoodSelect.addEventListener("change", (e) => {
+    updateState({ selectedNeighborhood: e.target.value });
+  });
+
   // Load route button
   loadRouteBtn.addEventListener("click", () => {
     if (!state.selectedUser) {
       alert("Select User!");
       return;
     }
-    if (!state.selectedRouteId) {
-      alert("Select route id!");
-      return;
-    }
-    if (!state.selectedDirection) {
-      alert("Select direction!");
-      return;
+    if (isRadnetzMode) {
+      if (!state.selectedNeighborhood) {
+        alert("Select neighborhood!");
+        return;
+      }
+    } else {
+      if (!state.selectedRouteId) {
+        alert("Select route id!");
+        return;
+      }
+      if (!state.selectedDirection) {
+        alert("Select direction!");
+        return;
+      }
     }
 
     console.log("state.selectedDirection", state.selectedDirection)

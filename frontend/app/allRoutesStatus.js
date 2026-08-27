@@ -1,4 +1,4 @@
-import { backendUrl } from './config.js';
+import { backendUrl, isRadnetzMode } from './config.js';
 import { state, updateState } from './state.js';
 import { handleFeatureClick } from './survey.js';
 
@@ -24,7 +24,8 @@ export async function loadRadrouteStatus() {
     }
     
     // Fetch radroute data from backend
-    const url = `${backendUrl}/get_layer?layer_name=radrouten`;
+
+    const url = isRadnetzMode ? `${backendUrl}/get_radnetz_by_neighborhood` : `${backendUrl}/get_layer?layer_name=radrouten`;
     const response = await fetch(url, {
       method: "GET",
       headers: {

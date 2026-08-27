@@ -100,6 +100,8 @@ export const formbricksUrl = urlParams.get('formbricksUrl') || 'https://bike-acc
 export const surveyId = urlParams.get('formbricksSurvey') || 'cmobkudkr000no601u3taqnu2';
 export const surveyUrl = `${formbricksUrl}/s/${surveyId}?embed=true`;
 export const highlightNeighborhood = urlParams.get("highlightNeighborhood") || null;
+export const isRadnetzMode = urlParams.get("radnetz") === "True";
 
 console.log('Using backend URL:', backendUrl);
 console.log('Using survey URL:', surveyUrl);
+console.log('Radnetz mode:', isRadnetzMode);

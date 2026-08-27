@@ -419,7 +419,7 @@
 
   <!-- Menu panel -->
   <div class="menu-panel" id="menuPanel">
-    <h2>Radrouten</h2>
+    <h2 id="menuTitle">Radrouten</h2>
     
     <div class="form-group">
       <label for="userSelect">Wer kartiert?</label>
@@ -428,16 +428,23 @@
       </select>
     </div>
     
-    <div class="form-group">
+    <div class="form-group" id="routeGroup">
       <label for="routeSelect">Route ID</label>
       <select id="routeSelect">
         <!-- Options will be populated by JavaScript -->
       </select>
     </div>
     
-    <div class="form-group">
+    <div class="form-group" id="directionGroup">
       <label for="directionSelect">Direction</label>
       <select id="directionSelect">
+        <!-- Options will be populated by JavaScript -->
+      </select>
+    </div>
+
+    <div class="form-group" id="neighborhoodGroup" style="display: none;">
+      <label for="neighborhoodSelect">Stadtteil</label>
+      <select id="neighborhoodSelect">
         <!-- Options will be populated by JavaScript -->
       </select>
     </div>

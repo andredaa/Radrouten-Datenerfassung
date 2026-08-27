@@ -1,7 +1,7 @@
 import { directionMapping } from './config.js';
 import { updateState } from './state.js';
 import { initMap } from './map.js';
-import { populateUserSelect, populateRouteSelect, updateDirectionSelect, setupEventListeners } from './ui.js';
+import { populateUserSelect, populateRouteSelect, updateDirectionSelect, populateNeighborhoodSelect, applyRadnetzMode, setupEventListeners } from './ui.js';
 
 // Initialize application
 function init() {
@@ -9,6 +9,8 @@ function init() {
   populateUserSelect();
   populateRouteSelect();
   updateDirectionSelect();
+  populateNeighborhoodSelect();
+  applyRadnetzMode();
   setupEventListeners();
 }
 

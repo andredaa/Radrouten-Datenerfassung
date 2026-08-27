@@ -1,12 +1,15 @@
-import { backendUrl } from './config.js';
+import { backendUrl, isRadnetzMode } from './config.js';
+export { isRadnetzMode } from './config.js';
 import { state, updateState } from './state.js';
 import { handleFeatureClick } from './survey.js';
 
 // Load radroute from backend
 export async function loadRadroute() {
   console.log("loading route", state.selectedDirection, state.selectedRouteId, state.map);
-  if (!state.map || state.selectedRouteId === undefined || !state.selectedDirection) return;
-  
+  if (!state.map) return;
+  if (isRadnetzMode && !state.selectedNeighborhood) return;
+  if (!isRadnetzMode && (state.selectedRouteId === undefined || !state.selectedDirection)) return;
+
   updateState({ isLoading: true });
   const loadRouteBtn = document.getElementById("loadRouteBtn");
   loadRouteBtn.disabled = true;
@@ -25,7 +28,9 @@ export async function loadRadroute() {
     }
     
     // Fetch radroute data from backend
-    const url = `${backendUrl}/get_layer?layer_name=radrouten&route_id=${state.selectedRouteId}&direction=${encodeURIComponent(state.selectedDirection)}`;
+    const url = isRadnetzMode
+      ? `${backendUrl}/get_radnetz_by_neighborhood?stadtteil_name=${encodeURIComponent(state.selectedNeighborhood)}`
+      : `${backendUrl}/get_layer?layer_name=radrouten&route_id=${state.selectedRouteId}&direction=${encodeURIComponent(state.selectedDirection)}`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -168,7 +173,9 @@ export function updateCompletedSurveysLayer() {
 
 // Get completed surveys from backend
 export async function getCompletedSurveys() {
-  const url = `${backendUrl}/get_finished_segments?route_id=${state.selectedRouteId}&direction=${encodeURIComponent(state.selectedDirection)}&user=${state.selectedUser}`;
+  const url = isRadnetzMode
+    ? `${backendUrl}/get_finished_segments?stadtteil_name=${encodeURIComponent(state.selectedNeighborhood)}&user=${state.selectedUser}`
+    : `${backendUrl}/get_finished_segments?route_id=${state.selectedRouteId}&direction=${encodeURIComponent(state.selectedDirection)}&user=${state.selectedUser}`;
   const response = await fetch(url, {
     method: "GET",
     headers: {

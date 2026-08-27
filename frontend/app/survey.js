@@ -1,4 +1,4 @@
-import { backendUrl, surveyUrl } from './config.js';
+import { backendUrl, isRadnetzMode, surveyUrl } from './config.js';
 import { state, updateState } from './state.js';
 import { updateCompletedSurveysLayer } from './routes.js';
 import { stopwatch } from './stopwatch.js';
@@ -24,8 +24,8 @@ export async function trackSurveyActivity(user, segmentId, actionType) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "route_id": state.selectedRouteId,
-        "route_direction": state.selectedDirection,
+        "route_id": isRadnetzMode ? 0 : state.selectedRouteId,
+        "route_direction": isRadnetzMode ? "Radnetz" : state.selectedDirection,
         "user": user,
         "segment_id": segmentId,
         "action": actionType
@@ -124,7 +124,11 @@ export function openSurveyModal(segmentId, geometryWkb, user, responseIdBackend,
   url.searchParams.set("segment_id", segmentId);
   url.searchParams.set("geometry_wkb", geometryWkb);
   url.searchParams.set("response_id_backend", responseIdBackend)
-  url.searchParams.set("9e90a2e8151f4943b79b4723", "2670e59186274c25adfed9f2");
+  url.searchParams.set("9e90a2e8151f4943b79b4723", "2670e59186274c25adfed9f2");  // "Besonderheit" preselected as "Nein"
+
+  if (isRadnetzMode) {
+    url.searchParams.set("radnetz_neighborhood", state.selectedNeighborhood);
+  }
 
   Object.entries(preparePrefilledAnswers(predefinedAnswers)).forEach(([key, value]) => {
     url.searchParams.set(key, value);
