@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from geojson_pydantic import FeatureCollection
 from pydantic import BaseModel, ConfigDict
 
-from db_connection.get_from_postgis import geojson_from_db
+from db_connection.get_from_postgis import geojson_from_db, get_radnetz_clipped_by_neighborhood
 from db_connection.radnetz_segments import (
     create_radnetz_segment,
     ensure_radnetz_segments_table_exists,
@@ -122,6 +122,20 @@ async def get_layer(
             f"Error fetching layer {layer_name} {route_id} {direction} from db: {e}",
         ) from e
 
+
+@app.get("/get_radnetz_by_neighborhood")
+async def get_radnetz_by_neighborhood(
+    stadtteil_name: str = Query(..., description="Name of the Hamburg Stadtteil, e.g. 'Altona-Altstadt'"),
+) -> FeatureCollection:
+    """Return radnetz segments clipped to the given Hamburg neighborhood (Stadtteil)."""
+    try:
+        return get_radnetz_clipped_by_neighborhood(stadtteil_name)
+    except Exception as e:
+        print(f"Error: {e}")
+        raise HTTPException(
+            404,
+            f"Error fetching radnetz for neighborhood '{stadtteil_name}': {e}",
+        ) from e
 
 @app.get("/get_finished_segments")
 async def get_finished_segments(

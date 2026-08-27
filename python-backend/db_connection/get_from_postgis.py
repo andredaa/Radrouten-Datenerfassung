@@ -8,6 +8,7 @@ from geojson_pydantic import FeatureCollection
 from shapely import wkb
 
 from db_connection.load_engine import get_engine
+from db_connection.radnetz_segments import get_radnetz_segmented_ids_from_db,get_radnetz_segments_from_db
 from sqlalchemy import inspect, text
 
 
@@ -160,3 +161,71 @@ def geojson_from_db(
         geojson = {"type": "FeatureCollection", "features": []}
 
     return geojson
+
+
+def get_radnetz_clipped_by_neighborhood(stadtteil_name: str) -> FeatureCollection:
+    """
+    Fetches radnetz segments clipped to the geometry of the given Hamburg neighborhood.
+
+    Args:
+        stadtteil_name: The value of the 'stadtteil_name' column in the hamburg_neighborhoods table.
+
+    Returns:
+        FeatureCollection of radnetz geometries clipped to the neighborhood boundary.
+    """
+    neighborhood_geom_col = get_geometry_column_name("hamburg_neighborhoods")
+    radnetz_geom_col = get_geometry_column_name("radnetz")
+
+    query = text(
+        f"""
+        SELECT jsonb_build_object(
+            'type', 'FeatureCollection',
+            'features', jsonb_agg(
+                jsonb_build_object(
+                    'type', 'Feature',
+                    'geometry', ST_AsGeoJSON(ST_Force2D(
+                        ST_Intersection(r.{radnetz_geom_col}, n.{neighborhood_geom_col})
+                    ))::jsonb,
+                    'properties', to_jsonb(r.*) - '{radnetz_geom_col}'
+                )
+            )
+        ) AS geojson
+        FROM radnetz r
+        JOIN hamburg_neighborhoods n
+          ON ST_Intersects(r.{radnetz_geom_col}, n.{neighborhood_geom_col})
+        WHERE n.stadtteil_name = :stadtteil_name
+          AND NOT ST_IsEmpty(ST_Intersection(r.{radnetz_geom_col}, n.{neighborhood_geom_col}))
+        """
+    )
+
+    engine = get_engine()
+    with engine.connect() as conn:
+        result = conn.execute(query, {"stadtteil_name": stadtteil_name})
+        geojson = result.scalar()
+
+    if geojson is None or geojson.get("features") is None:
+        geojson = {"type": "FeatureCollection", "features": []}
+
+    gdf = gpd.GeoDataFrame.from_features(geojson["features"])
+
+    gdf_segmented = gdf[gdf["fid"].isin(get_radnetz_segmented_ids_from_db())].copy()
+    
+    neighborhood_fids = set(gdf_segmented["fid"].tolist())
+    segmented_features_geometries = []
+    segmented_features_props = []
+
+    # create a new geojson with radnetz segments
+    for segment_dict in get_radnetz_segments_from_db():
+        if not any(fid in neighborhood_fids for fid in segment_dict["segments_ids"]):
+            continue
+        segment_id = f"{stadtteil_name}_{segment_dict['start_fid']}_{segment_dict['end_fid']}"
+        props = segment_dict.copy()
+        props["segment_id"] = segment_id
+        props["segment_features_fids"] = props["segments_ids"]
+        del props["segments_ids"]
+        segmented_features_props.append(props)
+        segmented_features_geometries.append(gdf_segmented[gdf_segmented["fid"].isin(props["segment_features_fids"])].union_all())
+
+    return json.loads(
+        gpd.GeoDataFrame(segmented_features_props, geometry=segmented_features_geometries).to_json()
+    )
