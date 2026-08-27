@@ -69,3 +69,25 @@ def get_radnetz_segmented_ids_from_db() -> list[str]:
 
         return segments
 
+
+def get_radnetz_segments_from_db() -> list[dict]:
+    """Get all fids for already segmented radnetz features"""
+    engine = get_engine()
+
+    query = text(f"""
+    SELECT start_fid, end_fid, segment_ids
+    FROM radnetz_segments
+    """)
+
+    with engine.connect() as conn:
+        result = conn.execute(query)
+    
+        segment_dicts = []
+        for row in result:
+            segment_dicts.append({
+                "start_fid": row[0],
+                "end_fid": row[1],
+                "segments_ids": row[2]
+            })
+
+        return segment_dicts

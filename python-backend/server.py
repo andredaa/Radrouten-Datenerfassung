@@ -15,7 +15,8 @@ from db_connection.get_from_postgis import geojson_from_db
 from db_connection.radnetz_segments import (
     create_radnetz_segment,
     ensure_radnetz_segments_table_exists,
-    get_radnetz_segmented_ids_from_db
+    get_radnetz_segmented_ids_from_db,
+    get_radnetz_segments_from_db
 )
 from db_connection.survey_logs import (
     create_survey_log,
@@ -288,8 +289,26 @@ async def new_radnetz_segment(
 
 @app.get("/get_radnetz_fids_segmented")
 async def get_radnetz_fids_segmented() -> list:
+    """
+    Simply returns fids of all features belonging to any radnetz segment
+    """
     try:
         return get_radnetz_segmented_ids_from_db()
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e)) from e
+
+
+@app.get("/get_radnetz_segments")
+async def get_radnetz_segments() -> list[dict]:
+    """Get all radnetz segments as list of dict.
+
+    Each list element describes a segment by
+    - start: fid of the segment's start feature
+    - end: fid of the segment's end feature
+    - segment_ids: fids of all features belonging to the segment (including start and end)
+    """
+    try:
+        return get_radnetz_segments_from_db()
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e)) from e
 
