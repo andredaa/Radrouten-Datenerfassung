@@ -5,6 +5,7 @@ import { loadRadroute, getCompletedSurveys } from './routes.js';
 import { loadRadrouteStatus } from './allRoutesStatus.js';
 import { openSurveyModal, closeSurveyModal, closeDialog, trackSurveyActivity, getResponseDetails } from './survey.js';
 import { updateCompletedSurveysLayer } from './routes.js';
+import { hamburgNeighborhoods } from './hamburgNeighborhoods.js';
 
 
 // neighborhoods for Radnetz kartierung

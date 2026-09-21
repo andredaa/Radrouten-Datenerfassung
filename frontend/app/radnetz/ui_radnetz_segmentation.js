@@ -1,7 +1,7 @@
 import { switchMapStyle } from '../map.js';
 import { state } from '../state.js';
 import { backendUrl, highlightNeighborhood } from '../config.js';
-import { hamburgNeighborhoods } from './hamburgNeighborhoods.js';
+import { hamburgNeighborhoods } from '../hamburgNeighborhoods.js';
 
 // Segmentation tool state (local to this page, not part of the shared app state)
 let segmentStart = null; // fid of the segment's start feature
@@ -328,10 +328,29 @@ export async function initSegmentation() {
     type: "line",
     source: "hamburg-neighborhood-source",
     paint: {
-      "line-color": "#d85256",
+      "line-color": "#98f0ed",
       "line-width": 4,
     },
-    filter: ["==", ["get", "stadtteil_name"], highlightNeighborhood],
+  });
+
+  // Label layer: show stadtteil_name for the highlighted neighborhood
+  state.map.addLayer({
+    id: "hamburg-neighborhood-label",
+    type: "symbol",
+    source: "hamburg-neighborhood-source",
+    layout: {
+      "symbol-placement": "line-center",
+      "text-field": ["get", "stadtteil_name"],
+      "text-size": 12,
+      "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
+      "text-allow-overlap": false,
+      "text-ignore-placement": false,
+    },
+    paint: {
+      "text-color": "#ffffff",
+      "text-halo-color": "#d85256",
+      "text-halo-width": 1.5,
+    },
   });
   }
 
