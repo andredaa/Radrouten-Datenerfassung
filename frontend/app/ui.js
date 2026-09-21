@@ -15,7 +15,7 @@ const NEIGHBORHOODS = [
   "St. Pauli, Neustadt, Sternschanze",
   "HafenCity",
   "Wilhelmsburg",
-  "Hamm, Dulsberg, Wandsbek, Marienthal, Jenfeld, Tonndorf",
+  "Hamm, Dulsberg, Wandsbek, Marienthal, Jenfeld, Eilbek, Tonndorf",
   "Rahlstedt, Tonndorf",
   "Bergedorf, Lohbrügge, Neuallermöhe, Neuengamme, Curslack",
   "Osdorf, Nienstedten, Gross Flottbek, Othmarschen, Lurup",
