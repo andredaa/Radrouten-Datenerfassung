@@ -10,7 +10,7 @@ import { hamburgNeighborhoods } from './hamburgNeighborhoods.js';
 
 // neighborhoods for Radnetz kartierung
 const NEIGHBORHOODS = [
-  "Harvestehude, Rotherbaum, Eimsbüttel, Hoheluft-West",
+  "Harvestehude, Rotherbaum, Eimsbüttel, Hoheluft-West, Winterhude",
   "Altona-Altstadt, Altona-Nord, Ottensen",
   "St. Pauli, Neustadt, Sternschanze",
   "HafenCity",
