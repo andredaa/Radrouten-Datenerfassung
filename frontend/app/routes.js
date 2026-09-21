@@ -14,6 +14,14 @@ export async function loadRadroute() {
   const loadRouteBtn = document.getElementById("loadRouteBtn");
   loadRouteBtn.disabled = true;
   loadRouteBtn.textContent = "Loading...";
+
+  if (state.selectedNeighborhood === "Rahlstedt, Tonndorf") {
+    alert("Nur der an Rahlstedt angrenzende Teil von Tonndorf muss abgefahren werden")
+  } 
+  
+  if (state.selectedNeighborhood.includes("Wandsbek")) {
+    alert("Nur der an Wandsbek angrenzende Teil von Tonndorf muss abgefahren werden")
+  }
   
   try {
     // Remove existing radroute layers if present

@@ -15,11 +15,12 @@ const NEIGHBORHOODS = [
   "St. Pauli, Neustadt, Sternschanze",
   "HafenCity",
   "Wilhelmsburg",
-  "Hamm, Dulsberg, Wandsbek, Marienthal, Jenfeld",
-  "Rahlstedt",
-  "Bergedorf",
-  "Osdorf, Nienstedten, Gross Flottbek, Othmarschen",
-  "Niendorf",
+  "Hamm, Dulsberg, Wandsbek, Marienthal, Jenfeld, Tonndorf",
+  "Rahlstedt, Tonndorf",
+  "Bergedorf, Lohbrügge, Neuallermöhe, Neuengamme, Curslack",
+  "Osdorf, Nienstedten, Gross Flottbek, Othmarschen, Lurup",
+  "Niendorf, Schnelsen",
+  "Alle"
 ];
 
 // Populate user select dropdown
