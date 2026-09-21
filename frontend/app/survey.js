@@ -128,6 +128,8 @@ export function openSurveyModal(segmentId, geometryWkb, user, responseIdBackend,
 
   if (isRadnetzMode) {
     url.searchParams.set("radnetz_neighborhood", state.selectedNeighborhood);
+    url.searchParams.set("74b5a5db51fa4913a6a9f3bf", "290d8348b1674421b39483a8");
+    url.searchParams.set("e922b34126c94acb982e3c57", "Radnetz");
   }
 
   Object.entries(preparePrefilledAnswers(predefinedAnswers)).forEach(([key, value]) => {
