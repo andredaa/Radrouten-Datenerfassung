@@ -84,7 +84,7 @@ def get_radnetz_segments_from_db() -> list[dict]:
     Ignore them for now
     """
     ignored_segments_start_fids = [
-        28380,85485,34404,80445,69490,85856,89025,4241,15746
+        28380,85485,34404,80445,69490,85856,89025,4241,15746, 84228, 84224
     ]
 
     with engine.connect() as conn:
