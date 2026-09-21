@@ -9,7 +9,7 @@ from shapely import wkb, to_wkb
 
 from db_connection.load_engine import get_engine
 from db_connection.radnetz_segments import get_radnetz_segmented_ids_from_db,get_radnetz_segments_from_db
-from sqlalchemy import inspect, text
+from sqlalchemy import bindparam, inspect, text
 
 
 """
@@ -163,7 +163,7 @@ def geojson_from_db(
     return geojson
 
 
-def get_radnetz_clipped_by_neighborhood(stadtteil_name: str | None) -> FeatureCollection:
+def get_radnetz_clipped_by_neighborhood(stadtteil_names: str | None) -> FeatureCollection:
     """
     Fetches radnetz segments clipped to the geometry of the given Hamburg neighborhood.
 
@@ -176,7 +176,9 @@ def get_radnetz_clipped_by_neighborhood(stadtteil_name: str | None) -> FeatureCo
     neighborhood_geom_col = get_geometry_column_name("hamburg_neighborhoods")
     radnetz_geom_col = get_geometry_column_name("radnetz")
 
-    if stadtteil_name:
+    if stadtteil_names:
+        stadtteil_names = [name.strip() for name in stadtteil_names.split(",")]
+
         query = text(
             f"""
             SELECT jsonb_build_object(
@@ -184,24 +186,24 @@ def get_radnetz_clipped_by_neighborhood(stadtteil_name: str | None) -> FeatureCo
                 'features', jsonb_agg(
                     jsonb_build_object(
                         'type', 'Feature',
-                        'geometry', ST_AsGeoJSON(ST_Force2D(
-                            ST_Intersection(r.{radnetz_geom_col}, n.{neighborhood_geom_col})
-                        ))::jsonb,
+                        'geometry', ST_AsGeoJSON(ST_Force2D(r.{radnetz_geom_col}))::jsonb,
                         'properties', to_jsonb(r.*) - '{radnetz_geom_col}'
                     )
                 )
             ) AS geojson
-            FROM radnetz r
-            JOIN hamburg_neighborhoods n
-            ON ST_Intersects(r.{radnetz_geom_col}, n.{neighborhood_geom_col})
-            WHERE n.stadtteil_name = :stadtteil_name
-            AND NOT ST_IsEmpty(ST_Intersection(r.{radnetz_geom_col}, n.{neighborhood_geom_col}))
+            FROM (
+                SELECT DISTINCT r.*
+                FROM radnetz r
+                JOIN hamburg_neighborhoods n
+                ON ST_Intersects(r.{radnetz_geom_col}, n.{neighborhood_geom_col})
+                WHERE n.stadtteil_name IN :stadtteil_names
+            ) r
             """
-        )
+        ).bindparams(bindparam("stadtteil_names", expanding=True))
         
         engine = get_engine()
         with engine.connect() as conn:
-            result = conn.execute(query, {"stadtteil_name": stadtteil_name})
+            result = conn.execute(query, {"stadtteil_names": stadtteil_names})
             geojson = result.scalar()
 
         if geojson is None or geojson.get("features") is None:

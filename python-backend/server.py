@@ -124,17 +124,17 @@ async def get_layer(
 
 
 @app.get("/get_radnetz_by_neighborhood")
-async def get_radnetz_by_neighborhood(
-    stadtteil_name: str = Query(None, description="Name of the Hamburg Stadtteil, e.g. 'Altona-Altstadt'"),
+async def get_radnetz_by_neighborhoods(
+    stadtteil_names: str = Query(None, description="Comma sep. list of names of the Hamburg Stadtteil, e.g. 'Altona-Altstadt'"),
 ) -> FeatureCollection:
     """Return radnetz segments clipped to the given Hamburg neighborhood (Stadtteil)."""
     try:
-        return get_radnetz_clipped_by_neighborhood(stadtteil_name)
+        return get_radnetz_clipped_by_neighborhood(stadtteil_names)
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(
             404,
-            f"Error fetching radnetz for neighborhood '{stadtteil_name}': {e}",
+            f"Error fetching radnetz for neighborhood '{stadtteil_names}': {e}",
         ) from e
 
 @app.get("/get_finished_segments")

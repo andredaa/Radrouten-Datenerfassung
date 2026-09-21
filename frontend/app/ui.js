@@ -9,22 +9,16 @@ import { updateCompletedSurveysLayer } from './routes.js';
 
 // neighborhoods for Radnetz kartierung
 const NEIGHBORHOODS = [
-  "Altona-Altstadt",
-  "Bergedorf",
-  "Dulsberg",
+  "Harvestehude, Rotherbaum, Eimsbüttel, Hoheluft-West",
+  "Altona-Altstadt, Altona-Nord, Ottensen",
+  "St. Pauli, Neustadt, Sternschanze",
   "HafenCity",
-  "Hamm",
-  "Harvestehude",
-  "Jenfeld",
-  "Marienthal",
-  "Neustadt",
-  "Niendorf",
-  "Osdorf",
-  "Rahlstedt",
-  "Rotherbaum",
-  "St. Pauli",
-  "Wandsbek",
   "Wilhelmsburg",
+  "Hamm, Dulsberg, Wandsbek, Marienthal, Jenfeld",
+  "Rahlstedt",
+  "Bergedorf",
+  "Osdorf, Nienstedten, Gross Flottbek, Othmarschen",
+  "Niendorf",
 ];
 
 // Populate user select dropdown
@@ -65,6 +59,32 @@ export function applyRadnetzMode() {
     directionGroup.style.display = "none";
     neighborhoodGroup.style.display = "";
     if (menuTitle) menuTitle.textContent = "Radnetz";
+
+    const addNeighborhoodLayer = () => {
+      // Add source and layer
+      state.map.addSource("hamburg-neighborhood-source", {
+        type: "geojson",
+        data: hamburgNeighborhoods,
+      });
+
+      // Base layer: alternating light/dark blue depending on fid parity
+      state.map.addLayer({
+        id: "hamburg-neighborhood",
+        type: "line",
+        source: "hamburg-neighborhood-source",
+        paint: {
+          "line-color": "#f2f458",
+          "line-width": 4,
+        },
+      });
+    };
+
+    if (state.map.isStyleLoaded()) {
+      addNeighborhoodLayer();
+    } else {
+      state.map.once("load", addNeighborhoodLayer);
+    }
+
   } else {
     routeGroup.style.display = "";
     directionGroup.style.display = "";

@@ -29,7 +29,7 @@ export async function loadRadroute() {
     
     // Fetch radroute data from backend
     const url = isRadnetzMode
-      ? `${backendUrl}/get_radnetz_by_neighborhood?stadtteil_name=${encodeURIComponent(state.selectedNeighborhood)}`
+      ? `${backendUrl}/get_radnetz_by_neighborhood?stadtteil_names=${encodeURIComponent(state.selectedNeighborhood)}`
       : `${backendUrl}/get_layer?layer_name=radrouten&route_id=${state.selectedRouteId}&direction=${encodeURIComponent(state.selectedDirection)}`;
     const response = await fetch(url, {
       method: "GET",
