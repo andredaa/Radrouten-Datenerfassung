@@ -79,11 +79,22 @@ def get_radnetz_segments_from_db() -> list[dict]:
     FROM radnetz_segments
     """)
 
+    """
+    There is some weird short and isolated segments in random places. 
+    Ignore them for now
+    """
+    ignored_segments_start_fids = [
+        28380,85485,34404,80445,69490,85856,89025,4241,15746
+    ]
+
     with engine.connect() as conn:
         result = conn.execute(query)
     
         segment_dicts = []
         for row in result:
+            if row[0] in ignored_segments_start_fids:
+                continue
+
             segment_dicts.append({
                 "start_fid": row[0],
                 "end_fid": row[1],
