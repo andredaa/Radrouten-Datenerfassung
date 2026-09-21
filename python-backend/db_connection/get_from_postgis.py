@@ -176,7 +176,7 @@ def get_radnetz_clipped_by_neighborhood(stadtteil_names: str | None) -> FeatureC
     neighborhood_geom_col = get_geometry_column_name("hamburg_neighborhoods")
     radnetz_geom_col = get_geometry_column_name("radnetz")
 
-    if stadtteil_names == "alle":
+    if stadtteil_names == "Alle":
         # returns all
         stadtteil_names = None
 
