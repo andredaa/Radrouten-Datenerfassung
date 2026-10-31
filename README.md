@@ -77,5 +77,5 @@ TLS certificates are managed via [certbot/certbot_init.sh](certbot/certbot_init.
 - Root-level `create_*_excel.py`, `create_kartierung_csv.py`, `kartierungsstatus.py`, `check_identical_segments.py`: reporting and analysis helpers.
 
 ## TODO 
-Upgrade Formbricks version
-Currently protected by basic auth. Integrate keycloak for login
+- Upgrade Formbricks version
+- Currently protected by basic auth. Integrate keycloak for login
