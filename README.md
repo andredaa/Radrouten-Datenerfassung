@@ -1,4 +1,4 @@
-# Kartierung Software Server
+# Kartierung Software
 
 Server stack for the Bike-Access-Check field survey ("Kartierung") of Hamburg's bicycle routes. Surveyors bike along route segments on a map and fill in a Formbricks survey per segment; progress is tracked in a PostGIS database.
 
