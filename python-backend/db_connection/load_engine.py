@@ -19,7 +19,7 @@ db_port = os.getenv('DB_PORT')
 db_name = os.getenv('POSTGIS_DB')
 
 # DB_CONNECTION_STRING=postgresql://postgres:123456@localhost:5432/IMEQ
-db_connection_string = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+db_connection_string = f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 print(f"DB connection string")
 
 print(db_connection_string)
